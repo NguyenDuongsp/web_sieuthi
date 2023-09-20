@@ -8,11 +8,7 @@
        
 </head>
 <body>
-<<<<<<< HEAD
- <h2>hjfvkjfjvhfk</h2>
-=======
- SUPERMAN
->>>>>>> ceff819a36155495b22fffac532ea94dcc95d1a8
+ SUPERMAN HERO
 <div class="menu">
   <ul class="menu-level-1">
     <li class="menu-item">
