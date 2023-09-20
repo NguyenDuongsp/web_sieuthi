@@ -8,7 +8,7 @@
        
 </head>
 <body>
-  <h1>my cho so</h1>
+ 
 <div class="menu">
   <ul class="menu-level-1">
     <li class="menu-item">
