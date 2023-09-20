@@ -1,0 +1,39 @@
+.menu {
+    width: 200px;
+  }
+  
+  .menu-level-1 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-item {
+    position: relative;
+  }
+  
+  .menu-item a {
+    display: block;
+    padding: 10px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  
+  
+  .menu-level-2 {
+    display: none;
+    background-color: #f0f0f0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .menu-level-2 .menu-item a {
+    display: block;
+    padding: 10px;
+    background-color: #e0e0e0;
+    color: #333;
+    text-decoration: none;
+  }

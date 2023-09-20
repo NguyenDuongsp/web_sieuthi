@@ -1,0 +1,35 @@
+:root{
+    --white-color:#fff;
+    --black-color:#000;
+    --text-color:#e8e6e6cc;
+}
+
+*{
+    box-sizing: inherit;
+}
+html{
+    font-size: 65.5%;
+    line-height: 1.6rem;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+
+.gird_full-with{
+    width:100%
+}
+.grid_row{
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+.grid_colum-2{
+   
+    width: 16.666%;
+
+}
+.grid_colum-10{
+   
+    width: 83.334%;
+    
+}

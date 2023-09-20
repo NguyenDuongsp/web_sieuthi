@@ -1,0 +1,252 @@
+.logo-web{
+    width: 100%;
+    height:60px;
+   
+}
+.wrap
+{
+    position: relative;
+}
+
+.area-pos{
+    position: fixed;
+    width: 16.667%;
+    height: 100%;
+}
+.logo-web__img{
+    width: 100%;
+    height: 100%;
+}
+.header-web{
+   background-color: #000;
+    width: 100%;
+    height: 61px;
+    display: inline-block;
+}
+.header-navbar__list{
+    display: flex;
+    justify-content: flex-end;
+    margin: 22px 50px 0 0;
+    line-height: 1.4;
+}
+.header-navbar__list-item{
+    list-style: none;
+    margin: 0 20px;
+}
+.header-link{
+    text-decoration: none;
+    color: var(--white-color);
+    font-size: 1.4rem;
+}
+
+
+.search-add-filter{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 15px;
+}
+
+.area-search__text{
+    width: 200px;
+    height: 34px;
+}
+.area-search__btn{
+    width: 72px;
+    height: 34px;
+    background-color:var(--black-color);
+    color: var(--white-color);
+    border: none;
+    border-radius: 2px;
+}
+.add-filter{
+    display: flex;
+
+}
+.add-item{
+    display: flex;
+    width: 130px;
+    height: 34px;
+    margin-right: 4px;
+    align-items: center;
+    color: var(--white-color);
+    background-color:var(--black-color);
+    border: none;
+    border-radius: 2px;
+}
+.add-item__icon{
+    
+    font-size: 1.4rem;
+    margin:0 8px;
+   
+}
+.add-item__text{
+    font-size: 1.4rem;
+}
+.filter-list{
+    width: 34px;
+    height: 34px
+    
+}
+
+.conten{
+  
+   
+    height: 100vh;
+    margin: 10px 0 10px 0;
+}
+.menu{
+    background-color: #373942;
+    margin: 0 ;
+    padding: 20px 0 ;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  
+}
+.menu__item-s,
+.menu__item {
+    list-style: none;
+    padding: 10px 0px;
+    cursor: pointer;
+    
+}
+
+
+
+.menu__item-link{
+    font-size: 1.6em;
+    text-decoration: none;
+    color: var(--text-color); 
+}
+.menu__item-link:hover{
+    margin-left: 4px;
+    
+}
+.sub-menu-item>.menu__item-link{
+    padding: 12px 0;
+    display: block;
+    margin-left: 36px;
+}
+
+
+.sub-menu {
+    display: none;
+    background-color: #373942;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    width: 100%;
+   
+
+}
+
+.sub-menu-item  {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+}
+.sub-menu-item:first-child{
+    margin-top: 15px;
+}
+.menu__item-link-icon{
+    margin:0 20px 0 16px;
+}
+table{
+    width: calc(100% - 20px);
+    margin-left: 10px;
+}
+
+  
+  
+
+
+
+
+  .header__navbar-user{
+    display: flex;
+    justify-items: center;
+    position: relative;
+}
+
+.header__navbar-user-img{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.header__navbar-user-name{
+    margin-left: 4px;
+    font-weight: 700px;
+    font-size: 1.4rem;
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+
+
+.header__navbar-user-menu{
+    width: 275px;
+    position: absolute;
+    z-index: 1;
+    padding-left: 0;
+    top: 175%;
+    left: -76%;
+    background-color: #ffffff;
+    border-radius: 2px; 
+    list-style: none;
+    box-shadow: 0 1px 3px #e0e0e0;
+    display: none;
+    animation: headerNotifyGrowth ease-in .2s;
+    will-change: opacity, transform;
+    transform-origin: calc(100% - 20px) top;
+    color: #555555;
+}
+
+.header__navbar-user-menu::before{
+    content: "";
+    border-width: 16px 20px;
+    border-style: solid;
+    border-color: transparent transparent var(--white-color) transparent;
+    position: absolute;
+    left: 50%;
+    top: -29px;
+}  
+
+.header__navbar-user-menu::after{
+    content: "";
+    display: block;
+    background-color: transparent;
+    position: absolute;
+    top: -8px;
+    right: 0;
+    width: 100%;
+    height: 12px;
+}
+
+.header__navbar-user-item--separate{
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.header__navbar-user-item a{
+    text-decoration: none;
+    color: #555;
+    font-size: 1.4rem;
+    display: block;
+    padding: 8px 16px;
+}
+
+.header__navbar-user-item a:first-child{
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.header__navbar-user-item a:last-child{
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.header__navbar-user-item a:hover{
+    background-color: #fafafa ;
+}
