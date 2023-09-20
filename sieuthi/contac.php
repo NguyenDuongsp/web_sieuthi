@@ -27,6 +27,7 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="./assets/fonts/fontawesome-free-6.4.2-web/css/all.min.css">
 </head>
 <body>
+    <h1>hoang cao duong</h1>
     <div class="app">
         <div class="gird wrap">
             <div class="grid_row wrap2">
