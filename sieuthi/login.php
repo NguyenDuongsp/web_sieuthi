@@ -64,7 +64,7 @@ mysqli_close($con);
                         <i class="icon-login fa-solid fa-lock"></i>
                     </div>
                     <div class="remember-login">
-                        <label for=""><input type="checkbox">Ghi nhớ tài khoản</label>
+                        <label for=""><input type="checkbox">Ghi nhớ </label>
                         <a href="#">Quên mật khẩu</a>
                     </div>
                     <button type="submit" name='btn-login' class="btn-login">Login</button>
