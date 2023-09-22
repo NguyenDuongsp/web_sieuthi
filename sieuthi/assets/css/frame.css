@@ -106,17 +106,27 @@
 .menu__item-s,
 .menu__item {
     list-style: none;
-    padding: 10px 0px;
+    
     cursor: pointer;
     
 }
+.menu__item-s:hover ,
 
+.menu__item:hover{
+    background-Color : #202126;
+    border-Left :3px solid #dce1ea;
+}
+.sub-menu-item:hover{
+    background-Color : #202126;
+}
 
 
 .menu__item-link{
     font-size: 1.6em;
     text-decoration: none;
     color: var(--text-color); 
+    padding: 10px 0px;
+    display: block;
 }
 .menu__item-link:hover{
     margin-left: 4px;
@@ -192,7 +202,7 @@ table{
     z-index: 1;
     padding-left: 0;
     top: 175%;
-    left: -76%;
+    left: -27%;
     background-color: #ffffff;
     border-radius: 2px; 
     list-style: none;
@@ -249,4 +259,10 @@ table{
 
 .header__navbar-user-item a:hover{
     background-color: #fafafa ;
+}
+
+.highlight {
+           
+    background-Color : #202126;
+    border-Left :3px solid #dce1ea;
 }

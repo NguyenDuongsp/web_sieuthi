@@ -1,13 +1,13 @@
 <?php
 session_start();
-$con = mysqli_connect('localhost', 'root', '', 'web_qlsieuthi') or die('lỗi kết nối');
+$con = mysqli_connect('localhost', 'root', '', 'web_qlsieuthi1') or die('lỗi kết nối');
 
 // Kiểm tra session để xác định xem người dùng đã đăng nhập hay chưa
 if (isset($_SESSION['username'])) {
     $tk = $_SESSION['username'];
 
     // Truy vấn thông tin tài khoản
-    $sql = "SELECT hoten FROM taikhoanad WHERE gmail='$tk' OR sdt='$tk'";
+    $sql = "SELECT hotenAM FROM taikhoan WHERE email='$tk' OR sdtAM='$tk'";
     $data = mysqli_query($con, $sql);
 
     // Đóng kết nối
@@ -27,7 +27,7 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="./assets/fonts/fontawesome-free-6.4.2-web/css/all.min.css">
 </head>
 <body>
-    <h1>hoang cao duong</h1>
+   
     <div class="app">
         <div class="gird wrap">
             <div class="grid_row wrap2">
@@ -74,10 +74,10 @@ if (isset($_SESSION['username'])) {
                                     </li>                                  
                                 </ul>
                             </li>
-                            <li class="menu__item"> 
-                                <a href="#" class="menu__item-link">
+                            <li class="menu__item"  > 
+                                <a href="./nhaphang.php" class="menu__item-link">
                                 <i class="menu__item-link-icon fa-solid fa-dolly"></i>
-                                    <span>Hàng hóa</span>
+                                    <span>Nhập hàng</span>
                                 </a>
                             </li>
                             <li class="menu__item"> 
@@ -120,21 +120,17 @@ if (isset($_SESSION['username'])) {
                                         if (isset($data) && $data != null) {
                                             while ($row = mysqli_fetch_array($data)) {
                                                 ?>
-                                                <span class="header__navbar-user-name"><?php echo $row['hoten'] ?></span>
+                                                <span class="header__navbar-user-name"><?php echo $row['hotenAM'] ?></span>
                                                 <?php
                                             }
+                                        }
+                                        else{
+                                            ?>
+                                            <span class="header__navbar-user-name">Tài khoản</span>
+                                            <?php
                                         }
                                         ?>
 
-                                        <?php
-                                        if (isset($data) && $data != null) {
-                                            while ($row = mysqli_fetch_array($data)) {
-                                                ?>
-                                                <span class="header__navbar-user-name"><?php echo $row['hoten'] ?></span>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
 
                                         <ul class="header__navbar-user-menu">
                                             <li class="header__navbar-user-item">
@@ -176,42 +172,7 @@ if (isset($_SESSION['username'])) {
                         </div>
 
 
-                        <div class="conten">
-                        <form method="post" action="">
-           
-                
-            <table border="1" cellspacing="0" >
-                <tr style="background: pink;">
-                    <th>STT</th>
-                    <th>Mã loại sách</th>
-                    <th>Tên loại sách</th>
-                    <th>Mô tả</th>
-                </tr>
-                <!-- <?php
-                //b3: xử lý kết quả truy vấn(hiển thị mảng $data lên bảng)
-                if(isset($data)&& $data!=null){
-                    $i=0;
-                    while($row=mysqli_fetch_array($data)){
-                ?>
-                    <tr>
-                        <td><?php echo ++$i ?></td>
-                        <td><?php echo $row['Maloai'] ?></td>
-                        <td><?php echo $row['Tenloai'] ?></td>
-                        <td><?php echo $row['Mota'] ?></td>
-                        <td>
-                            <a href="./Loaisach_sua.php?Maloai=<?php echo $row['Maloai'] ?>"><font color="red">Sửa</a>&nbsp;&nbsp;
-                            <a href="./Loaisachxoa.php?Maloai=<?php echo $row['Maloai'] ?>">Xóa</a>
-                        </td>
-                    </tr>
-                <?php        
-                        }
-                    }
-                    //kết thúc b3
-                ?> -->
-              
-            </table>
-        </form>
-                        </div>
+                       
                 </div>
             </div>
         </div>
@@ -221,30 +182,7 @@ if (isset($_SESSION['username'])) {
     var menuItems = document.getElementsByClassName('menu__item');
     var subMenuItems = document.getElementsByClassName('sub-menu-item');
       
-    // đổi màu sub-menu-item khi nhấn vào
-        for(var i = 0; i<subMenuItems.length; i++)
-        {
-            subMenuItems[i].addEventListener('click', function(){
-                for(var j = 0; j<subMenuItems.length; j++)
-                {
-                    subMenuItems[j].style.backgroundColor = "#373942";
-                    subMenuItems[j].style.borderLeft = "none";
-                }
-                this.style.backgroundColor = "#202126";
-                this.style.borderLeft = "3px solid #dce1ea";
-            })
-        }
-        for (var i = 0; i < menuItems.length; i++) {
-        menuItems[i].addEventListener('click', function() {
-            for (var j = 0; j < menuItems.length; j++) {
-                menuItems[j].style.backgroundColor = "#373942";
-                menuItems[j].style.borderLeft = "none";
-            }
-            // Đổi màu nền và viền trái cho menu cấp 1 khi được nhấp vào
-                this.style.backgroundColor = "#202126";
-                this.style.borderLeft = "3px solid #dce1ea";
-        });
-        }
+  
         var menuItemsS = document.getElementsByClassName('menu__item-s');
          
             for (var i = 0; i < menuItemsS.length; i++) {
@@ -266,40 +204,7 @@ if (isset($_SESSION['username'])) {
                     event.stopPropagation();
                 });
             }
-//             var menuItems = document.getElementsByClassName('menu__item');
-// var subMenuItems = document.getElementsByClassName('sub-menu-item');
 
-// Đổi màu sub-menu-item khi nhấn vào menu-item
-for (var i = 0; i < menuItems.length; i++) {
-  menuItems[i].addEventListener('click', function() {
-    // Đặt màu cho tất cả sub-menu-item là #FFF
-    for (var j = 0; j < subMenuItems.length; j++) {
-      subMenuItems[j].style.backgroundColor = "#373942";
-      subMenuItems[j].style.borderLeft = "none";
-    }
-  });
-}
-
-// Đổi màu menu-item khi nhấn vào sub-menu-item
-for (var i = 0; i < subMenuItems.length; i++) {
-  subMenuItems[i].addEventListener('click', function() {
-    // Đặt màu cho tất cả menu-item là #FFF
-    for (var j = 0; j < menuItems.length; j++) {
-      menuItems[j].style.backgroundColor = "#373942";
-      menuItems[j].style.borderLeft = "none";
-    }
-  });
-}
-// Đổi màu menu-item khi nhấn vào menu-item-s
-for (var i = 0; i < menuItemsS.length; i++) {
-  menuItemsS[i].addEventListener('click', function() {
-    // Đặt màu cho tất cả menu-item là #FFF
-    for (var j = 0; j < menuItems.length; j++) {
-      menuItems[j].style.backgroundColor = "#373942";
-      menuItems[j].style.borderLeft = "none";
-    }
-  });
-}
     </script>
 
     <script>
@@ -314,5 +219,36 @@ menuUser.addEventListener('click', function() {
 });
             
     </script>
+
+<script>
+        // Lấy danh sách các phần tử có class "sub-item-link"
+        var subItemLinks = document.getElementsByClassName('menu__item');
+
+        // Gán sự kiện click cho mỗi phần tử
+        for (var i = 0; i < subItemLinks.length; i++) {
+            subItemLinks[i].addEventListener('click', storeData);
+        }
+
+        function storeData(event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+            // Lấy dữ liệu từ ô được bấm
+            var cellData = this.querySelector('.menu__item-link').innerText;
+
+            // Lưu dữ liệu vào localStorage để truyền sang trang khác
+            localStorage.setItem('selectedCellData', cellData);
+
+            // Lưu đường dẫn hiện tại vào localStorage để truyền sang trang khác
+            localStorage.setItem('currentPagePath', window.location.href);
+
+            // Chuyển đến đường dẫn trong thuộc tính href của thẻ <a>
+            window.location.href = this.querySelector('.menu__item-link').href;
+        }
+    </script>
+
+
+
+
+    
 </body>
 </html>

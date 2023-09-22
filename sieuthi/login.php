@@ -1,6 +1,6 @@
 <?php
 session_start();
-$con = mysqli_connect('localhost', 'root', '', 'web_qlsieuthi') or die('lỗi kết nối');
+$con = mysqli_connect('localhost', 'root', '', 'web_qlsieuthi1') or die('lỗi kết nối');
 $tk = '';
 $mk = '';
 
@@ -9,7 +9,7 @@ if (isset($_POST['btn-login'])) {
     $mk = $_POST['txtpassword'];
 
     // Kiểm tra thông tin đăng nhập
-    $sql = "SELECT gmail, sdt, matkhau FROM taikhoanad WHERE (gmail='$tk' OR sdt='$tk') AND matkhau='$mk'";
+    $sql = "SELECT email, sdtAM, matkhau FROM taikhoan WHERE (email='$tk' OR sdtAM='$tk') AND matkhau='$mk'";
     $kq = mysqli_query($con, $sql);
 
     if (mysqli_num_rows($kq) > 0) {
