@@ -1,13 +1,13 @@
 <?php
 session_start();
-$con = mysqli_connect('localhost', 'root', '', 'web_qlsieuthi1') or die('lỗi kết nối');
+$con = mysqli_connect('localhost', 'root', '', 'ql_sieuthi') or die('lỗi kết nối');
 
 // Kiểm tra session để xác định xem người dùng đã đăng nhập hay chưa
 if (isset($_SESSION['username'])) {
     $tk = $_SESSION['username'];
 
     // Truy vấn thông tin tài khoản
-    $sql = "SELECT hotenAM FROM taikhoan WHERE email='$tk' OR sdtAM='$tk'";
+    $sql = "SELECT TenNguoiDung FROM taikhoan WHERE Email='$tk' OR SDT='$tk'";
     $data = mysqli_query($con, $sql);
 
     // Đóng kết nối
@@ -23,7 +23,7 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./assets/css/frame.css">
     <link rel="stylesheet" href="./assets/css/base.css">
- 
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/fonts/fontawesome-free-6.4.2-web/css/all.min.css">
 </head>
 <body>
@@ -56,12 +56,13 @@ if (isset($_SESSION['username'])) {
                                     </li>         
                                 </ul>
                             </li>
-                            <li class="menu__item-s"> 
-                                <a href="#" class="menu__item-link">
+                            <!-- thêm chữ s -->
+                            <li class="menu__item"> 
+                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/dsnv.php" class="menu__item-link">
                                 <i class="menu__item-link-icon fa-solid fa-people-group fa-sm"></i>
-                                     <span>Quản lý nhân viên</span>
+                                     <span>Nhân viên</span>
                                 </a>
-                                <ul class="sub-menu">
+                                <!-- <ul class="sub-menu">
                                     <li class="sub-menu-item"> 
                                         <a href="#" class="menu__item-link">
                                             <span>o</span>
@@ -72,7 +73,14 @@ if (isset($_SESSION['username'])) {
                                             <span>o</span>
                                         </a>
                                     </li>                                  
-                                </ul>
+                                </ul> -->
+                            </li>
+                            <li class="menu__item"  > 
+                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/Quanlysanpham.php" class="menu__item-link">
+                                
+                                <i class="menu__item-link-icon  fa-solid fa-boxes-stacked"></i>
+                                    <span>Sản Phẩm</span>
+                                </a>
                             </li>
                             <li class="menu__item"  > 
                                 <a href="./nhaphang.php" class="menu__item-link">
@@ -81,15 +89,41 @@ if (isset($_SESSION['username'])) {
                                 </a>
                             </li>
                             <li class="menu__item"> 
-                                <a href="#" class="menu__item-link">
+                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/khuyenmai.php" class="menu__item-link">
                                 <i class="menu__item-link-icon fa-solid fa-rug"></i>
                                     <span>Khuyến mãi</span>
                                 </a>
                             </li>
                             <li class="menu__item"> 
-                                <a href="#" class="menu__item-link">
+                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/Quanlynhacungcap.php" class="menu__item-link">
                                 <i class="menu__item-link-icon fa-solid fa-truck-moving"></i>
                                      <span>Nhà cung cấp</span>
+                                </a>
+                            </li>
+                            <li class="menu__item"> 
+                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/Quanlykhachhang.php" class="menu__item-link">
+                               
+                                <i class="menu__item-link-icon  fa-solid fa-user-tie"></i>
+                                     <span>Khách hàng</span>
+                                </a>
+                            </li>
+                            <li class="menu__item"> 
+                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/Quanlydonhang.php" class="menu__item-link">
+                                
+                                <i class="menu__item-link-icon fa-solid fa-floppy-disk"></i>
+                                     <span>Đơn hàng</span>
+                                </a>
+                            </li>
+                            <li class="menu__item"> 
+                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/hoadon.php" class="menu__item-link">
+                                <i class="menu__item-link-icon  fa-solid fa-receipt"></i>
+                                     <span>Hóa đơn</span>
+                                </a>
+                            </li>
+                            <li class="menu__item"> 
+                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/dskhohang.php" class="menu__item-link">
+                                <i class="menu__item-link-icon  fa-solid fa-warehouse"></i>
+                                     <span>Kho hàng</span>
                                 </a>
                             </li>
                     </ul>
@@ -120,7 +154,7 @@ if (isset($_SESSION['username'])) {
                                         if (isset($data) && $data != null) {
                                             while ($row = mysqli_fetch_array($data)) {
                                                 ?>
-                                                <span class="header__navbar-user-name"><?php echo $row['hotenAM'] ?></span>
+                                                <span class="header__navbar-user-name"><?php echo $row['TenNguoiDung'] ?></span>
                                                 <?php
                                             }
                                         }
@@ -136,12 +170,8 @@ if (isset($_SESSION['username'])) {
                                             <li class="header__navbar-user-item">
                                                 <a href="">Tài khoản của tôi</a>
                                             </li>
-                                            <li class="header__navbar-user-item">
-                                                <a href="">Địa chỉ của tôi</a>
-                                            </li>
-                                            <li class="header__navbar-user-item">
-                                                <a href="">Đơn mua</a>
-                                            </li>
+                                           
+                                           
                                             <li class="header__navbar-user-item header__navbar-user-item--separate">
                                                 <a href="">Đăng xuất</a>
                                             </li>
@@ -153,20 +183,30 @@ if (isset($_SESSION['username'])) {
                         </header>
                         <div class="search-add-filter">
                             <div class="area-search">
-                                    <input type="text" class="area-search__text" placeholder="Nhập thông tin tìm kiếm">
-                                <button class="area-search__btn">
+                                    <input class="area-search__text" type="text" name="txttimkiem"  placeholder="Nhập thông tin tìm kiếm">
+                                <button name="btntim" type="submit" class="area-search__btn">
                                      <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
+                                <!-- <input class="btn-tim" type="submit" name="btntim" value="tìm kiếm "> -->
                             </div>
                             
                             <div class="add-filter">
-                                    <button class="add-item">
+                                    <button class="add-item js-buy-ticket">
                                          <i class="add-item__icon fa-solid fa-plus"></i>
-                                         <p class="add-item__text">Thêm ...</p>
+                                         <p class="add-item__text">Thêm</p>
                                     </button>
-                                    <button class="filter-list">
+                                    <div class="filter-list btn">
                                         <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
+                                        <ul class="list_excel">
+                                            <li class="list_excel--item">
+                                                <button class="btn btn-sucess" name="btnxuatexcel" type="submit" >xuất excel</button>
+                                            </li>
+                                            
+                                            <li class="list_excel--item header__navbar-user-item--separate">
+                                                <button >Nhập excel</button>
+                                            </li>
+                                        </ul>
+                                    </div>
                             </div>
 
                         </div>
@@ -176,7 +216,9 @@ if (isset($_SESSION['username'])) {
                 </div>
             </div>
         </div>
+        
     </div>
+    
     <script>
     // Lấy danh sách tất cả các menu cấp 1
     var menuItems = document.getElementsByClassName('menu__item');
@@ -206,8 +248,39 @@ if (isset($_SESSION['username'])) {
             }
 
     </script>
+    <!-- <script>
+        const Btn= document.querySelector('.js-buy-ticket')
+      Btn.addEventListener('click',function(event){
+         
+          event.stopPropagation();
+      })  
 
-    <script>
+    </script> -->
+    <!-- hiển thị menu tài khoản -->
+    <!-- <script>
+      var menuExcel = document.getElementsByClassName('filter-list')[0];
+var submenuExcel = document.getElementsByClassName('list_excel')[0];
+var formElement = document.querySelector('form');
+
+menuExcel.addEventListener('click', function() {
+  if (submenuExcel.style.display === 'block') {
+    submenuExcel.style.display = 'none';
+  } else {
+    submenuExcel.style.display = 'block';
+  }
+});
+
+formElement.addEventListener('submit', function(event) {
+  if (submenuExcel.style.display === 'block') {
+    // event.preventDefault(); // Ngăn chặn hành vi mặc định của sự kiện submit
+
+    // Thực hiện hành động tương tự như khi submenu hiển thị
+    // Additional logic for form submission if needed
+  }
+}); 
+    </script> -->
+    <!-- hiển thị list excel -->
+<script>
        var menuUser = document.getElementsByClassName('header__navbar-user')[0];
 menuUser.addEventListener('click', function() {
     var submenuUser = document.getElementsByClassName('header__navbar-user-menu')[0];
@@ -219,7 +292,6 @@ menuUser.addEventListener('click', function() {
 });
             
     </script>
-
 <script>
         // Lấy danh sách các phần tử có class "sub-item-link"
         var subItemLinks = document.getElementsByClassName('menu__item');
@@ -246,8 +318,33 @@ menuUser.addEventListener('click', function() {
         }
     </script>
 
+<!-- <script>
+    var logout =document.querySelector('header__navbar-user-item')
+    logout.addEventListener('click',function(){
 
+        window.location.href='./login.php';
+    })
 
+</script> -->
+<!-- <script>
+   var excel = document.getElementsByClassName('list_excel--item');
+for (var i = 0; i < excel.length; i++) {
+  excel[i].addEventListener('click', function() {
+    // Gửi yêu cầu HTTP đến máy chủ để xử lý excel
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'xuly_excel.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // Xử lý phản hồi từ máy chủ nếu cần
+        var response = xhr.responseText;
+        console.log(response);
+      }
+    };
+    xhr.send('btnxuatexcel=true');
+  });
+}
+</script> -->
 
     
 </body>
