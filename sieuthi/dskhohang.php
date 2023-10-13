@@ -179,7 +179,7 @@ mysqli_close($conn);
                         <td><?php echo $row['TenSanPham'] ?></td>
                         <td><?php echo $row['SoLuong'] ?></td>
                         <td><?php echo $row['MaNhapHang'] ?></td>
-                        <td><?php echo $row['NgayNhapKho'] ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($row['NgayNhapKho'])) ?></td>
                         <td><?php echo $row['MaNhaCungCap'] ?></td>
                         <td>
                             <span class="btntool btn btn-primary">
@@ -249,7 +249,7 @@ mysqli_close($conn);
                     <tr>
                         <td class = "col1">Ngày nhập kho</td>
                         <td class = "col2">
-                            <input  class="form-control" type="text"name ="txtnnk" value="<?php echo $nnk?>" style="width:450px">
+                            <input  class="form-control" type="date"name ="txtnnk" value="<?php echo $nnk?>" style="width:450px">
                         </td>
                     </tr>
                     <tr>

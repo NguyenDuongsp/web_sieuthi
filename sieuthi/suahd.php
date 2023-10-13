@@ -45,10 +45,15 @@ if (isset($_POST['btnLuu'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sửa Thông Tin Nhân Viên</title>
-    <link rel="stylesheet" href="./bootstrap.min.css">
+    <title></title>
+    
 </head>
 <body>
+<?php 
+    include_once'./contac.php';
+
+    ?>
+
     <div class="conten">
         <form method="post" action="">
             <table  class="table table-striped">

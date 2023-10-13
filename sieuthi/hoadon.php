@@ -24,7 +24,7 @@ if(isset($_POST['btnLuu'])){
    
 // KIỂM TRA MÃ LOẠI RỖNG 
         if($mhd==''){
-            echo "<script>alert('Phải nhập ten hang ')</script>";
+            echo "<script>alert('Phải nhập tên hang ')</script>";
         }
         else{
  // kiểm tra khóa chính (mã loại)
@@ -177,7 +177,9 @@ mysqli_close($con4n);
                         <td><?php echo date('d/m/Y', strtotime($row['NgayTao'])) ?></td>
                         
                         <td>
+                        <span class="btntool btn btn-primary">
                             <a href="./suahd.php?MaHoaDon=<?php echo $row['MaHoaDon']?>" style="color:#0018;    text-decoration: none"> Sửa </a> &nbsp;&nbsp; 
+                        </span>
                             <span class="btntool btn btn-danger">
 
                                 <a href="./xoahd.php?MaHoaDon=<?php echo $row['MaHoaDon']?>">Xóa</a>

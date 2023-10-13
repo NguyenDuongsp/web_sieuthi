@@ -26,6 +26,11 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/fonts/fontawesome-free-6.4.2-web/css/all.min.css">
 </head>
+<style>
+    .table{
+        background-color: #fff;
+    }
+</style>
 <body>
    
     <div class="app">
@@ -44,7 +49,7 @@ if (isset($_SESSION['username'])) {
                                 </a>
                                 <ul class="sub-menu">
                                     <li class="sub-menu-item"> 
-                                        <a href="#" class="menu__item-link">
+                                        <a href="./baocao.php" class="menu__item-link">
                                         <i class="menu__item-link-icon fa-solid fa-people-group fa-sm"></i>
                                             <span>Báo cáo doanh số</span>
                                         </a>
@@ -168,12 +173,12 @@ if (isset($_SESSION['username'])) {
 
                                         <ul class="header__navbar-user-menu">
                                             <li class="header__navbar-user-item">
-                                                <a href="">Tài khoản của tôi</a>
+                                                <button class="js-link'" >Tài khoản của tôi</button>
                                             </li>
                                            
                                            
                                             <li class="header__navbar-user-item header__navbar-user-item--separate">
-                                                <a href="">Đăng xuất</a>
+                                                <a href="./login.php">Đăng xuất</a>
                                             </li>
                                         </ul>
                             </li>
@@ -214,11 +219,103 @@ if (isset($_SESSION['username'])) {
 
                        
                 </div>
+                <div class="modal js-modal1">
+                 <div class="modal-container js-modal-container1">
+                   <div class="modal-close js-modal-close1">
+                   <i class="fa-solid fa-xmark"></i>
+                   </div>
+                       <form method="post" action="">
+                       <table class="table table-borderless`">
+                   <tr>
+                       <td colspan="2" style="text-align: center;">
+                           <h5 >Thêm thông tin hàng nhập</h5>
+                       </td>
+                   </tr>
+            
+                   <tr>
+                       <td class="col1">Mã nhập hàng</td>
+                       <td class="col2">
+                           <input class="form-control" type="text" name="txtmanhaphang" value="<?php echo $mnh ?>">
+                       </td>
+            
+                   </tr>
+                   <tr>
+                       <td class="col1">Mã sản phẩm</td>
+                       <td class="col2">
+                           <input class="form-control" type="text" name="txtmasanpham"value="<?php echo $msp ?>" >
+                       </td>
+                       
+                   </tr>
+                   
+                       <tr>
+                       <td class= "col1">Số lượng</td>
+                       <td class="col2">
+                           <input class="form-control" type="text" name="txtsoluonghangnhap" value="<?php echo $soluong ?>" >
+                       </td>   
+                   </tr>
+                   <tr>
+                       <td class= "col1">Ngày Nhập</td>
+                       <td class="col2">
+                           <input class="form-control" type="text" name="txtngaynhap" value="<?php echo $ngaynhap   ?>" >
+                       </td>   
+                   </tr>
+                   <tr>
+                       <td class="col1"></td>
+                       <td class="col2">
+                           <input class="btn btn-primary" type="submit" name="btnLuu" value="Lưu" style="width:100px;">
+                       </td>
+                       
+                   </tr>
+                    </table>
+                       </form>
+                   </div>
             </div>
         </div>
         
+          
     </div>
+
     
+               
+    <!-- <script  >
+      var bBtn= document.getElementsByClassName('js-link')[0];
+        console.log(bBtn);
+       const modl=document.querySelector('.js-modal1')
+       const modlClose=document.querySelector('.js-modal-close1')
+       const modlContainer=document.querySelector('.js-modal-container1')
+       //thêm class open vào modal
+
+       function showBuyTicke(){
+              modl.classList.add('open')
+            //    var formElement = document.querySelector('form');
+            // formElement.addEventListener('submit', function(event) {
+            //     event.preventDefault(); // Prevent form submission
+
+            //      // Call the function to show the modal
+            //     // Additional logic for form submission if needed
+            // });
+            
+       }
+       
+       //gỡ bỏ class open khỏi modal
+       function hideBuyTicke(){
+              modl.classList.remove('open')
+        //       var form = document.querySelector('form');
+        //   form.submit();
+       }
+        
+            
+            bBtn.addEventListener('click',showBuyTicke)
+        
+        modlClose.addEventListener('click',hideBuyTicke)
+
+        modl.addEventListener('click',hideBuyTicke)
+
+        modlContainer.addEventListener('click',function(event){
+           event.stopPropagation()      })
+          
+    </script>
+     -->
     <script>
     // Lấy danh sách tất cả các menu cấp 1
     var menuItems = document.getElementsByClassName('menu__item');

@@ -105,7 +105,7 @@
     background-color: #ccc;
     width: 83.334%;;
     float: right;
-    height: 100vh;
+    height: 100%;
     margin: 10px 0 10px 0;
     display: flex;
     align-items: flex-start;
@@ -193,6 +193,7 @@
 table{
     width: calc(100% - 20px);
     margin: 15px 10px 0 10px;
+    background-color: var(--white-color);
 }
 
   
@@ -250,7 +251,7 @@ table{
     background-color: transparent;
 }
 .header__navbar-user-menu{
-    width: 275px;
+    width: 270px;
     position: absolute;
     z-index: 1;
     padding-left: 0;
@@ -384,10 +385,7 @@ cursor: pointer;
             transform: translateY(0)
         }
     }
-   table .table{
-    background-color: var(--white-color);
-   }
-   img{
-    width: 100px;
-    height: 100px;
-}
+  
+   
+
+

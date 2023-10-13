@@ -183,10 +183,11 @@ mysqli_close($con_3);
                         <td><?php echo isset($row['MaKhachHang']) ? $row['MaKhachHang'] : ''; ?></td>
                         <td><?php echo isset($row['SDT']) ? $row['SDT'] : ''; ?></td>
                         <td><?php echo isset($row['Gmail']) ? $row['Gmail'] : ''; ?></td>
-                        <td><?php echo isset($row['NgayLap']) ? $row['NgayLap'] : ''; ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($row['NgayLap'])) ?></td>
                         <td><?php echo isset($row['TongTien']) ? $row['TongTien'] : ''; ?></td>
                         <td><?php echo isset($row['TinhTrang']) ? $row['TinhTrang'] : ''; ?></td>
                         <td>
+                            
                             <span class="btntool btn btn-primary">
 
                                 <a href="./Donhang_sua.php?MaDonHang=<?php echo $row['MaDonHang'] ?>">Sửa</a>&nbsp;&nbsp;

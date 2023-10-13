@@ -179,11 +179,10 @@ mysqli_close($cons1);
                         <td><?php echo $row['MaKhuyenMai'] ?></td>
                         <td><?php echo $row['TenKhuyenMai'] ?></td>
                         
-                        <td><?php echo $row['NgayBatDau'] ?></td>
-                        <td><?php echo $row['NgayKetThuc'] ?></td>
-                      
+                        <td><?php echo date('d/m/Y', strtotime($row['NgayBatDau'])) ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($row['NgayKetThuc'])) ?></td>
                         <td><?php echo $row['PhanTramKhuyenMai'] ?></td>
-                        <td><?php echo $row['NgayKetThuc'] ?></td>
+                        <td><?php echo $row['MoTa'] ?></td>
                         <td>
                             <span class="btntool btn btn-primary">
 
@@ -207,7 +206,7 @@ mysqli_close($cons1);
                
             </table>
            
-       
+                        </div>
              </form>
        
              <div class="modal js-modal">

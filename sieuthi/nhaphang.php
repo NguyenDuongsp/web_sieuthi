@@ -171,7 +171,7 @@ mysqli_close($cons);
                         <td><?php echo $row['MaSanPham'] ?></td>
                         
                         <td><?php echo $row['SoLuongNhap'] ?></td>
-                        <td><?php echo $row['NgayNhap'] ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($row['NgayNhap'])) ?></td>
                         <td>
                             <span class="btntool btn btn-primary">
 
