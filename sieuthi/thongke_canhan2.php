@@ -37,11 +37,31 @@ if (isset($_POST['btnTai'])) {
 $currentDate = date('Y-m-d');
 $expirationDate = date('Y-m-d', strtotime('+30 days'));
 
-$query = "SELECT TenSanPham, MaSanPham, SoLuong, HanSuDung 
-FROM sanpham 
-WHERE HanSuDung BETWEEN '$currentDate' AND '$expirationDate' 
-AND ThanhLy = 0";
-$result = $conn->query($query);
+// $query = "SELECT TenSanPham, MaSanPham, SoLuong, HanSuDung 
+// FROM sanpham 
+// WHERE HanSuDung BETWEEN '$currentDate' AND '$expirationDate' 
+// AND ThanhLy = 0";
+// $result = $conn->query($query);
+
+//truy vaans có cả tìm kiém
+if (isset($_POST['btntim'])) {
+    $search = $_POST['txttimkiem'];
+
+    // Truy vấn SQL để tìm kiếm vận đơn
+    $query = "SELECT TenSanPham, MaSanPham, SoLuong, HanSuDung 
+    FROM sanpham 
+    WHERE HanSuDung BETWEEN '$currentDate' AND '$expirationDate' 
+    AND ThanhLy = 0 AND MaSanPham LIKE '%$search%'" ;
+    $result = $conn->query($query);
+} else {
+    // Truy vấn SQL để thống kê tất cả sản phẩm quá hạn
+    $query = "SELECT TenSanPham, MaSanPham, SoLuong, HanSuDung 
+    FROM sanpham 
+    WHERE HanSuDung BETWEEN '$currentDate' AND '$expirationDate' 
+    AND ThanhLy = 0";
+    $result = $conn->query($query);
+}
+
 
 
     // Xử lý xuất Excel

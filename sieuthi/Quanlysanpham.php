@@ -111,9 +111,9 @@ if(isset($_POST['btnxuatexcel'])){
     //căn giữa
     $sheet->getStyle('A'.$rowCount.':J'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     //Điền dữ liệu vào các dòng. Dữ liệu lấy từ DB
-    $msp=$_POST['txtMaSanPham'];
-    $tsp=$_POST['txtTenSanPham'];
-    $sqltk_5="SELECT * FROM sanpham WHERE MaSanPham like '%$msp%' and TenSanPham like '%$tsp%' ";
+    $msp=$_POST['txttimkiem'];
+    
+    $sqltk_5="SELECT * FROM sanpham WHERE MaSanPham like '%$msp%' ";
     $data_5=mysqli_query($con_5, $sqltk_5);
 
     while($row=mysqli_fetch_array($data_5)){

@@ -18,13 +18,13 @@
             $mnn=$sheetData[$i]["D"];
             $nnk=$sheetData[$i]["E"];
             $mncc = $sheetData[$i]["F"];
-			$sql_9="INSERT INTO nhaphang VALUES('$msp','$tsp','$sl','$mnn','$mncc')";
-			$connnn->query($sql_9);
+			$sql_l9="INSERT INTO khohang VALUES('$msp','$tsp','$sl','$mnn','$mncc')";
+			$connnn->query($sql_l9);
 		}
 		echo "<script>alert('Thêm mới thành công!')</script>";
 
     }
-    mysqli_close($connnn);
+    mysqli_close($connnn    );
 ?>
 <!DOCTYPE html>
 <html lang="en">

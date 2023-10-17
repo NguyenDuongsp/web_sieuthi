@@ -187,6 +187,10 @@ mysqli_close($con_2);
 
                                 <a href="./Nhacungcap_xoa.php?MaNhaCungCap=<?php echo $row['MaNhaCungCap'] ?>">Xóa</a>
                             </span>
+                            <span class="btntool btn btn-danger">
+
+                                <a href="./Ncc_xem.php?MaNhaCungCap=<?php echo $row['MaNhaCungCap'] ?>">Xem</a>
+                            </span>
                         </td>
                     </tr>
                 <?php        

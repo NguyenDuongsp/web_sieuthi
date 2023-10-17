@@ -7,7 +7,7 @@ for (let i = 0; i < productList.length; i++) {
     productList[i].addEventListener("click", function(event) {
         var productItem = event.target.closest(".home-product-item");
         var productImg = productItem.querySelector("img").src;
-        var productPrice = productItem.querySelector(".home-product-item__price-old").textContent;
+        var productPrice = productItem.querySelector(".home-product-item__price-new").textContent;
         var productName = productItem.querySelector(".home-product-item__name").textContent;
         addProduct(productImg, productName, productPrice);
     });

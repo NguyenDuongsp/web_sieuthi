@@ -137,4 +137,9 @@ if (isset($_POST['txta']) && isset($_POST['txtb'])) {
     </div>
         </form>
 </body>
+<style>
+        .add-item {
+            display: none;
+        }
+    </style>
 </html>

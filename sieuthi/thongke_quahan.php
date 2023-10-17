@@ -37,9 +37,20 @@ if (isset($_POST['btnTai'])) {
 
 // Truy vấn SQL để thống kê sản phẩm quá hạn
 $currentDate = date('Y-m-d');
-$query1 = "SELECT TenSanPham, MaSanPham, SoLuong, HanSuDung FROM sanpham WHERE HanSuDung < '$currentDate'";
-$result1 = $conn->query($query1);
 
+
+//truy vaans có cả tìm kiém
+if (isset($_POST['btntim'])) {
+    $search = $_POST['txttimkiem'];
+
+    // Truy vấn SQL để tìm kiếm vận đơn
+    $query = "SELECT TenSanPham, MaSanPham, SoLuong, HanSuDung FROM sanpham WHERE HanSuDung < '$currentDate' AND MaSanPham LIKE '%$search%'" ;
+    $result1 = $conn->query($query);
+} else {
+    // Truy vấn SQL để thống kê tất cả sản phẩm quá hạn
+    $query = "SELECT TenSanPham, MaSanPham, SoLuong, HanSuDung FROM sanpham WHERE HanSuDung < '$currentDate'";
+    $result1 = $conn->query($query);
+}
 
     // Xử lý xuất Excel
     if (isset($_POST['btnXuatExcel'])) {
@@ -137,7 +148,7 @@ $result1 = $conn->query($query1);
                         echo "<td>".$row["MaSanPham"]."</td>";
                         echo "<td>".$row["SoLuong"]."</td>";
                         echo "<td>".$row["HanSuDung"]."</td>";
-                        echo "<td><a href='sanpham_xoa.php?MaSanPham=" .$row["MaSanPham"] . "'>Xoá</a></td>";
+                        echo "<td><a href='sanpham_xoa.php?MaSanPham=" .$row["MaSanPham"] . "'onclick='return confirm(\"Bạn có chắc chắn muốn xoá hoá đơn này?\")'>Xoá</a></td>";
                         echo "</tr>";
                     }
                 } else {

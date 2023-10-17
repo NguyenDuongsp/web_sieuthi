@@ -14,9 +14,14 @@
 		for($i=2;$i<=count($sheetData);$i++){
 			$mnh=$sheetData[$i]["A"];
 			$msp=$sheetData[$i]["B"];
-			$sl=$sheetData[$i]["C"];
-            $nn=$sheetData[$i]["D"];
-			$sql_9="INSERT INTO nhaphang VALUES('$mnh','$msp','$sl','$nn')";
+			$tensp=$sheetData[$i]["C"];
+            $mncc=$sheetData[$i]["D"];
+            $slp=$sheetData[$i]["E"];
+            $nn=$sheetData[$i]["F"];
+            $ngaysx=$sheetData[$i]["G"];
+            $hsd=$sheetData[$i]["H"];
+            $anh=$sheetData[$i]["I"];
+			$sql_9="INSERT INTO nhaphang VALUES('$mnh','$msp','$tensp','$mncc','$sl','$nn', '$ngaysx', '$hsd', '$anh')";
 			$connnn->query($sql_9);
 		}
 		echo "<script>alert('Thêm mới thành công!')</script>";

@@ -47,7 +47,7 @@ if(isset($_POST['btnLuu'])){
 }
 //xư lý button tìm kiếm
 if(isset($_POST['btnnhapexcel'])){
-    echo "<script>window.location.href='./nhapfile_nhaphang.php'</script>";
+    echo "<script>window.location.href='./nhapfilekhohang.php'</script>";
     exit;
 }
  //Xu li xuat excel

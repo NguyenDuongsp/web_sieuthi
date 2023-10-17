@@ -4,6 +4,7 @@ $tnv = '';
 $cv = '';
 $em = '';
 $sdt = '';
+$mk = '';
 
 // Kết nối đến cơ sở dữ liệu
 $consss = mysqli_connect("localhost", "root", "", "ql_sieuthi");
@@ -30,9 +31,10 @@ if (isset($_POST['btnLuu'])) {
     $cv = $_POST['txtcv'];
     $em = $_POST['txtem'];
     $sdt = $_POST['txtsdt'];
+    $mk = $_POST['txtmk'];
 
     // Cập nhật thông tin kho hàng
-    $sql5 = "UPDATE nhanvien SET  TenNhanVien='$tnv', ChucVu='$cv', Email='$em', SDT = '$sdt' WHERE MaNhanVien='$mnv'";
+    $sql5 = "UPDATE nhanvien SET  TenNhanVien='$tnv', ChucVu='$cv', Email='$em', SDT = '$sdt', mk = '$mk' WHERE MaNhanVien='$mnv'";
     $kq4 = mysqli_query($consss, $sql5);
     if ($kq4) {
         mysqli_close($consss);
@@ -95,6 +97,12 @@ if (isset($_POST['btnLuu'])) {
                             <td class="col1">SĐT</td>
                             <td class="col2">
                                 <input class="form-control" type="text" name="txtsdt" value="<?php echo $row['SDT'] ?>" style="width:450px;">
+                            </td>   
+                        </tr>
+                        <tr>
+                            <td class="col1">Mật khẩu</td>
+                            <td class="col2">
+                                <input class="form-control" type="text" name="txtmk" value="<?php echo $row['mk'] ?>" style="width:450px;">
                             </td>   
                         </tr>
                     <?php            

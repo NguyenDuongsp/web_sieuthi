@@ -95,8 +95,7 @@ WHERE
                         <input class="form-control" type="text" name="txtMaSanPham" value="<?php echo $row['MaSanPham'] ?>" disabled style style="width:550px;height:40px;">
                     </td>
                 </tr> 
-
-
+               
                 <tr>
                     <td class="col1">Địa Chỉ</td>
                     <td class="col2">

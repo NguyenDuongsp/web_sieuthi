@@ -1,7 +1,7 @@
 <?php
  include_once './Classes/PHPExcel.php';
  include_once './Classes/PHPExcel/IOFactory.php';
- $mnv = "";$tnv = "";$cv = "";$em = "";$sdt = "";
+ $mnv = "";$tnv = "";$cv = "";$em = "";$sdt = "";$mk="";
 //B1: kết nối đến database
 $connn=mysqli_connect("localhost","root","","ql_sieuthi")
 or die('Lỗi kết nối');
@@ -19,8 +19,9 @@ if(isset($_POST['btnLuu'])){
     $cv = $_POST['txtcv'];
     $em = $_POST['txtem'];
     $sdt = $_POST['txtsdt'];
+    $mk = $_POST['txtmk'];
     // KIỂM TRA MÃ LOẠI RỖNG 
-    if($mnv==''){
+     if($mnv==''){
         echo "<script>alert('Phải nhập ten hang ')</script>";
     }
     else{
@@ -33,7 +34,7 @@ $data2=mysqli_query($connn,$sql2);
   }
     else{
     //Tao truy van chen du  lieu vao bang Loaisach
-    $sql2="INSERT INTO nhanvien VALUES ('$mnv','$tnv','$cv','$em','$sdt')";
+    $sql2="INSERT INTO nhanvien VALUES ('$mnv','$tnv','$cv','$em','$sdt',$mk)";
     $kq1=mysqli_query($connn,$sql2);
     if($kq1) {
         echo "<script> alert('Them moi thanh cong!')</script>";
@@ -45,7 +46,7 @@ $data2=mysqli_query($connn,$sql2);
 }
 //xư lý button tìm kiếm
 if(isset($_POST['btnnhapexcel'])){
-    echo "<script>window.location.href='./nhapfile_nhaphang.php'</script>";
+    echo "<script>window.location.href='./nhapfilenv.php'</script>";
     exit;
 }
  //Xu li xuat excel
@@ -61,6 +62,7 @@ if(isset($_POST['btnnhapexcel'])){
     $sheet->setCellValue('C'.$rowCount,'Chức vụ');
     $sheet->setCellValue('D'.$rowCount,'Email');
     $sheet->setCellValue('E'.$rowCount,'SĐT');
+    $sheet->setCellValue('F'.$rowCount,'mk');
    
     //định dạng cột tiêu đề
     $sheet->getColumnDimension('A')->setAutoSize(true);
@@ -68,10 +70,11 @@ if(isset($_POST['btnnhapexcel'])){
     $sheet->getColumnDimension('C')->setAutoSize(true);
     $sheet->getColumnDimension('D')->setAutoSize(true);
     $sheet->getColumnDimension('E')->setAutoSize(true);
+    $sheet->getColumnDimension('F')->setAutoSize(true);
     //gán màu nền
-    $sheet->getStyle('A'.$rowCount.':E'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
+    $sheet->getStyle('A'.$rowCount.':F'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
     //căn giữa
-    $sheet->getStyle('A'.$rowCount.':E'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->getStyle('A'.$rowCount.':F'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     //Điền dữ liệu vào các dòng. Dữ liệu lấy từ DB
     $mnv=$_POST['txtmanv'];
     
@@ -85,6 +88,7 @@ if(isset($_POST['btnnhapexcel'])){
         $sheet->setCellValue('C'.$rowCount,$row['ChucVu']);
         $sheet->setCellValue('D'.$rowCount,$row['Email']);
         $sheet->setCellValue('E'.$rowCount,$row['SDT']);
+        $sheet->setCellValue('F'.$rowCount,$row['mk']);
     }
     //Kẻ bảng 
     $styleAray=array(
@@ -94,7 +98,7 @@ if(isset($_POST['btnnhapexcel'])){
             )
         )
         );
-    $sheet->getStyle('A2:'.'E'.($rowCount))->applyFromArray($styleAray);
+    $sheet->getStyle('A2:'.'F'.($rowCount))->applyFromArray($styleAray);
     $objWriter=new PHPExcel_Writer_Excel2007($objExcel);
     $fileName='ExportExcel.xlsx';
     $objWriter->save($fileName);
@@ -162,8 +166,8 @@ mysqli_close($connn);
                     <th>Chức vụ</th>
                     <th>Email</th>
                     <th>SĐT</th>
+                    <th>Mật khẩu</th>
                     <th>Tác vụ</th>
-
                 </tr>
                 
                 <?php
@@ -178,6 +182,7 @@ mysqli_close($connn);
                         <td><?php echo $row['ChucVu'] ?></td>
                         <td><?php echo $row['Email'] ?></td>
                         <td><?php echo $row['SDT'] ?></td>
+                        <td><?php echo $row['mk'] ?></td>
                         <td>
                             <span class="btntool btn btn-primary">
 
@@ -244,10 +249,16 @@ mysqli_close($connn);
                         </td>
                     </tr>  
                     
-                     <tr>
+                    <tr>
                         <td class = "col1">SĐT</td>
                         <td class = "col2">
-                            <input  class="form-control" type="text"name ="txtsdt" value="<?php echo $sdt?>" style="width:450px">
+                            <input class="form-control" type="text"name ="txtsdt"value="<?php echo $sdt?>" style="width:450px">
+                        </td>
+                    </tr> 
+                     <tr>
+                        <td class = "col1">Mật khẩu</td>
+                        <td class = "col2">
+                            <input  class="form-control" type="text"name ="txtmk" value="<?php echo $mk?>" style="width:450px">
                         </td>
                      
                         <td class = "col1"></td>

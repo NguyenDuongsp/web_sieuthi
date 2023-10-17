@@ -42,24 +42,18 @@ if (isset($_SESSION['username'])) {
                             <img class="logo-web__img" src="./assets/img/logo5.jpg" alt="">
                         </div>
                         <ul class="menu">
-                            <li class="menu__item-s"> 
-                                <a href="#" class="menu__item-link">
-                                <i class="menu__item-link-icon fa-regular fa-clipboard"></i>
-                                        <span>Báo Cáo</span>
+                        <li class="menu__item"  > 
+                                <a href="./dieukhien.php" class="menu__item-link">
+                                <i class="menu__item-link-icon fa-solid fa-network-wired"></i>
+                                    <span>Điều Khiển</span>
                                 </a>
-                                <ul class="sub-menu">
-                                    <li class="sub-menu-item"> 
-                                        <a href="./baocao.php" class="menu__item-link">
-                                        <i class="menu__item-link-icon fa-solid fa-people-group fa-sm"></i>
-                                            <span>Báo cáo doanh số</span>
-                                        </a>
-                                    </li>
-                                    <li class="sub-menu-item"> 
-                                        <a href="#" class="menu__item-link">
-                                            <span>báo cáo hàng hóa</span>
-                                        </a>
-                                    </li>         
-                                </ul>
+                            </li>
+                            <li class="menu__item"> 
+                                <a href="./baocao.php" class="menu__item-link">
+                                <i class="menu__item-link-icon fa-regular fa-clipboard"></i>
+                                        <span>Báo cáo doanh số</span>
+                                </a>
+                               
                             </li>
                             <!-- thêm chữ s -->
                             <li class="menu__item"> 
@@ -80,13 +74,42 @@ if (isset($_SESSION['username'])) {
                                     </li>                                  
                                 </ul> -->
                             </li>
-                            <li class="menu__item"  > 
-                                <a href="http://localhost/WEB_SIEUTHI/sieuthi/Quanlysanpham.php" class="menu__item-link">
-                                
+
+                            
+                            <li class="menu__item-s"> 
+                                <a href="#" class="menu__item-link">
                                 <i class="menu__item-link-icon  fa-solid fa-boxes-stacked"></i>
-                                    <span>Sản Phẩm</span>
+                                        <span>Quản lý sản phẩm</span>
                                 </a>
-                            </li>
+                                <ul class="sub-menu">
+                                    <li class="sub-menu-item"> 
+                                        <a href="http://localhost/WEB_SIEUTHI/sieuthi/Quanlysanpham.php" class="menu__item-link">
+                                        <i class="menu__item-link-icon  fa-solid fa-boxes-stacked"></i>
+                                            <span>Sản phẩm</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-menu-item"> 
+                                        <a href="http://localhost/WEB_SIEUTHI/sieuthi/thongke_canhan2.php" class="menu__item-link">
+                                        <i class="menu__item-link-icon fa-regular fa-calendar-minus"></i>
+                                            <span>Cận hạn</span>
+                                        </a>
+                                    </li>  
+
+                                    <li class="sub-menu-item"> 
+                                        <a href="http://localhost/WEB_SIEUTHI/sieuthi/thongke_quahan.php" class="menu__item-link">
+                                        <i class="menu__item-link-icon fa-regular fa-calendar-xmark"></i>
+                                            <span>Quá hạn</span>
+                                        </a>
+                                    </li>
+                                    <li class="sub-menu-item"> 
+                                        <a href="http://localhost/WEB_SIEUTHI/sieuthi/ThanhLy_my.php" class="menu__item-link">
+                                        <i class="menu__item-link-icon fa-solid fa-money-bill-transfer"></i>
+                                            <span>Thanh lý</span>
+                                        </a>
+                                    </li>        
+                                </ul>
+
+                           
                             <li class="menu__item"  > 
                                 <a href="./nhaphang.php" class="menu__item-link">
                                 <i class="menu__item-link-icon fa-solid fa-dolly"></i>
@@ -225,7 +248,7 @@ if (isset($_SESSION['username'])) {
                    <i class="fa-solid fa-xmark"></i>
                    </div>
                        <form method="post" action="">
-                       <table class="table table-borderless`">
+                       <!-- <table class="table table-borderless`">
                    <tr>
                        <td colspan="2" style="text-align: center;">
                            <h5 >Thêm thông tin hàng nhập</h5>
@@ -266,7 +289,7 @@ if (isset($_SESSION['username'])) {
                        </td>
                        
                    </tr>
-                    </table>
+                    </table> -->
                        </form>
                    </div>
             </div>

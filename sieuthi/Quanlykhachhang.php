@@ -220,21 +220,21 @@ mysqli_close($con_1);
                     
                 </tr>
                 <tr>
-                    <td class="col1">Địa chỉ</td>
+                    <td class="col1">Tên tài khoản</td>
                     <td class="col2">
                         <input class="form-control" type="text" name="txtTenTaiKhoan" value="<?php echo $tenTK ?>" style="width:450px;">
                     </td>
                 </tr>
                 
                 <tr>
-                    <td class= "col1">Email</td>
+                    <td class= "col1">Số điện thoại</td>
                     <td class="col2">
                         <input class="form-control" type="text" name="txtSDT" value="<?php echo $SDT ?>" style="width:450px;">
                     </td>   
                 </tr>
 
                 <tr>
-                    <td class= "col1">Số điện thoại</td>
+                    <td class= "col1">Email</td>
                     <td class="col2">
                         <input class="form-control" type="text" name="txtGmail" value="<?php echo $Gmail ?>" style="width:450px;">
                     </td>   

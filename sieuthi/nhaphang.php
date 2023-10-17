@@ -38,7 +38,7 @@ if(isset($_POST['btnLuu'])){
            echo "<script>alert('Trùng mã nhập hàng')</script>";
        }
     else{
-        $sql3="INSERT INTO nhaphang (MaNhapHang, MaSanPham, SoLuongNhap, NgayNhap, TenSanPham, MaNhaCungCap, NgaySanXuat, HanSuDung) VALUES('$mnh', '$msp','$tensp','$mncc', '$soluong', '$ngaynhap','$ngaysx', '$hsd')";
+        $sql3="INSERT INTO nhaphang (MaNhapHang, MaSanPham,TenSanPham, MaNhaCungCap, SoLuongNhap, NgayNhap,  NgaySanXuat, HanSuDung) VALUES('$mnh', '$msp','$tensp','$mncc', '$soluong', '$ngaynhap','$ngaysx', '$hsd')";
         $kq2=mysqli_query($cons,$sql3);
         if (isset($_FILES['image'])) {
             $errors = array();

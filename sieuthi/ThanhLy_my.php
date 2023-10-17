@@ -14,6 +14,12 @@ $result = $conn->query($query);
 <html>
 <head>
     <title>Thanh li</title>
+    <style>
+        img{
+            height: 50px;
+            width: 50px;
+        }
+    </style>
 </head>
 <body>
     
@@ -70,8 +76,7 @@ $result = $conn->query($query);
                             <td><?php echo $row['LoaiSanPham'] ?></td>
                             <td>
                                 <span class="btntool btn btn-danger">
-
-                                    <a href="./sanpham_xoa.php?MaSanPham=<?php echo $row['MaSanPham'] ?>">Xóa</a>
+                                    <a href="./sanpham_xoa.php?MaSanPham=<?php echo $row['MaSanPham'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm?')">Xóa</a>
                                 </span>
                             </td>
                         </tr>

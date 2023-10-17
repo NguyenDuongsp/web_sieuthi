@@ -1,27 +1,32 @@
+
+
 <?php
-// include_once ('bootstrap.min.css');
 
+include_once ('ketnoi_csdl_quy.php');
 // Lấy dữ liệu từ form
-$MaVanDon = isset($_POST['MaVanDon']) ? $_POST['MaVanDon'] : '';
-$NgayLapDon = isset($_POST['NgayLapDon']) ? $_POST['NgayLapDon'] : '';
-$MaDonHang = isset($_POST['MaDonHang']) ? $_POST['MaDonHang'] : '';
-$MoTaDonHang = isset($_POST['MoTaDonHang']) ? $_POST['MoTaDonHang'] : '';
-$NoiDi = isset($_POST['NoiDi']) ? $_POST['NoiDi'] : '';
-$NoiDen = isset($_POST['NoiDen']) ? $_POST['NoiDen'] : '';
-$TinhTrang = isset($_POST['TinhTrang']) ? $_POST['TinhTrang'] : '';
-$MaNhanVien = isset($_POST['MaNhanVien']) ? $_POST['MaNhanVien'] : '';
-$MaKhachHang = isset($_POST['MaKhachHang']) ? $_POST['MaKhachHang'] : '';
-$TrongLuongHangHoa = isset($_POST['TrongLuongHangHoa']) ? $_POST['TrongLuongHangHoa'] : '';
-$PhiVanChuyen = isset($_POST['PhiVanChuyen']) ? $_POST['PhiVanChuyen'] : '';
-$PhuongThucVanChuyen = isset($_POST['PhuongThucVanChuyen']) ? $_POST['PhuongThucVanChuyen'] : '';
-$SoLuongKienHang = isset($_POST['SoLuongKienHang']) ? $_POST['SoLuongKienHang'] : '';
+// Xử lý khi submit form
+if (isset($_POST['btnluu'])) {
+    $MaVanDon = $_POST['MaVanDon'] ?? '';
+    $NgayLapDon = $_POST['NgayLapDon'] ?? '';
+    $MaDonHang = $_POST['MaDonHang'] ?? '';
+    $MoTaDonHang = $_POST['MoTaDonHang'] ?? '';
+    $NoiDi = $_POST['NoiDi'] ?? '';
+    $NoiDen = $_POST['NoiDen'] ?? '';
+    $TinhTrang = $_POST['TinhTrang'] ?? '';
+    $MaNhanVien = $_POST['MaNhanVien'] ?? '';
+    $MaKhachHang = $_POST['MaKhachHang'] ?? '';
+    $TrongLuongHangHoa = $_POST['TrongLuongHangHoa'] ?? '';
+    $PhiVanChuyen = $_POST['PhiVanChuyen'] ?? '';
+    $PhuongThucVanChuyen = $_POST['PhuongThucVanChuyen'] ?? '';
+    $SoLuongKienHang = $_POST['SoLuongKienHang'] ?? '';
 
-
+    // Tiếp theo, bạn có thể sử dụng các biến này trong câu truy vấn INSERT hoặc các hoạt động xử lý khác.
+}
 
 // Kiểm tra giá trị khóa chính trước khi thực hiện truy vấn INSERT
 if (!empty($MaVanDon)) {
     // Kết nối tới cơ sở dữ liệu
-    include_once ('ketnoi_csdl_quy.php');
+   
 
     // Kiểm tra giá trị khóa chính đã tồn tại trong bảng chưa
     $query = "SELECT * FROM vandon WHERE MaVanDon = '$MaVanDon'";
@@ -52,7 +57,7 @@ if (!empty($MaVanDon)) {
 <html>
 <head>
     <title>Chức năng Vận đơn</title>
-   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
     <style>
         h2 {
@@ -102,12 +107,12 @@ if (!empty($MaVanDon)) {
 <body>
     <h2>Tạo vận đơn mới</h2>
     <form action="" method="POST" >
-    
+        <div class = "form-group">
         <label for="MaVanDon">Mã vận đơn:</label>
-        <input type="text" name="MaVanDon" required>
+        <input type="text" name="MaVanDon" class="form-control" required>
 
         <label for="NgayLapDon">Ngày lập đơn:</label>
-        <input type="date" name="NgayLapDon" required>
+        <input type="date" name="NgayLapDon" class="form-control" required>
 
         <label for="MaDonHang">Mã đơn hàng:</label>
         <input type="text" name="MaDonHang">
@@ -142,8 +147,8 @@ if (!empty($MaVanDon)) {
         <label for="SoLuongKienHang">Số lượng kiện hàng:</label>
         <input type="text" name="SoLuongKienHang">
 
-        <input type="submit" value="Tạo vận đơn">
-    
+        <input type="submit" value="Tạo vận đơn" name = "btnluu">
+        </div>
     </form>
 </body>
 </html>

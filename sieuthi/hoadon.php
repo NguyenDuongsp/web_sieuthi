@@ -312,5 +312,10 @@ modalClose.addEventListener('click',hideBuyTickers)
             }
         }
     </script> 
+    <style>
+        .add-item {
+            display: none;
+        }
+    </style>
     </body>
 </html>

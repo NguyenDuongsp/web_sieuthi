@@ -13,7 +13,7 @@
         $sdt_ncc=$_POST['txtSDT'];
         $gmail_ncc=$_POST['txtGmail'];
          //tạo và thực hiện truy vấn chèn dữ liệu vào bảng loaisach
-            $sql_2="UPDATE nhacungcap SET TenNhaCungCap='$tNcc', MaSanPham='$msp', DiaChi='$dc_ncc', SDT='$$sdt_ncc', Gmail='$gmail_ncc' WHERE MaNhaCungCap='$mNcc'";
+            $sql_2="UPDATE nhacungcap SET TenNhaCungCap='$tNcc', MaSanPham='$msp', DiaChi='$dc_ncc', SDT=' $sdt_ncc', Gmail='$gmail_ncc' WHERE MaNhaCungCap='$mNcc'";
             $kq_2=mysqli_query($con_2, $sql_2);
             if($kq_2) {
                 header("location:Quanlynhacungcap.php");
@@ -88,7 +88,7 @@
                 <tr>
                     <td class= "col1">SDT</td>
                     <td class="col2">
-                        <input class="form-control" type="text" name="txtDiaChi" value="<?php echo $row['DiaChi'] ?>" style="width:450px;">
+                        <input class="form-control" type="text" name="txtSDT" value="<?php echo $row['SDT'] ?>" style="width:450px;">
                     </td>   
                 </tr>
 

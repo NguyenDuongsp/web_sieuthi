@@ -14,7 +14,7 @@ if (isset($_POST['btn-login'])) {
 
     if (mysqli_num_rows($kq) > 0) {
         $_SESSION['username'] = $tk; // Lưu tên người dùng vào session
-        header("location: contac.php");
+        header("location: dieukhien.php");
         exit;
     } else {
         $_SESSION['error_message'] = "Tên người dùng hoặc mật khẩu không đúng!";

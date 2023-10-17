@@ -16,9 +16,10 @@
 			$tnv=$sheetData[$i]["B"];
 			$cv=$sheetData[$i]["C"];
             $em=$sheetData[$i]["D"];
-            $sdt=$sheetData[$i]["F"];
-			$sql_9="INSERT INTO nhaphang VALUES('$mnv','$tnv','$cv','$em','$sdt')";
-			$connnn->query($sql_9);
+            $sdt=$sheetData[$i]["E"];
+            $mk=$sheetData[$i]["F"];
+			$sql_19="INSERT INTO nhanvien VALUES('$mnv','$tnv','$cv','$em','$sdt','$mk')";
+			$connnn->query($sql_19);
 		}
 		echo "<script>alert('Thêm mới thành công!')</script>";
 
