@@ -8,14 +8,19 @@
 .txttongtien{
     height: 100%;
     width: 416px;
-    background-color: #000;
-    color: var(--white-color);
+    background-color: #ced3d7;
+    color: var(--black-color);
+    font-size: 50px;
+    font-weight: 50px;
 
 }
 
 .btn_thanhtoan{
     height: 100%;
     width: 177px;
+    font-size: 30px;
+    font-weight: 50px;
+
 }
 .are_scroll{
     position: fixed;

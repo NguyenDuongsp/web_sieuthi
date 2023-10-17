@@ -184,10 +184,10 @@ mysqli_close($con4n);
 
                                 <a href="./xoahd.php?MaHoaDon=<?php echo $row['MaHoaDon']?>">Xóa</a>
                             </span>
-                            <span class="btntool btn btn-danger">
+                            <!-- <span class="btntool btn btn-danger">
 
                                 <a href="./hoadonxem.php?MaHoaDon=<?php echo $row['MaHoaDon']?>">Xem</a>
-                            </span>
+                            </span> -->
                         </td>
                     </tr>
                 <?php        

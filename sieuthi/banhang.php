@@ -177,7 +177,20 @@ if(isset($_POST['btn_thanhtoan'])){
                             <li class="header__navbar-item header__navbar-item--bold">Đăng nhập</li> -->
                             <li class="header__navbar-item header__navbar-user">
                                 <img src="https://kynguyenlamdep.com/wp-content/uploads/2022/06/avatar-cute-meo-con-than-chet-700x695.jpg" alt="" class="header__navbar-user-img">
-                                <span class="header__navbar-user-name">Nguyễn Quân</span>
+                                <?php
+                                        if (isset($data) && $data != null) {
+                                            while ($row = mysqli_fetch_array($data)) {
+                                                ?>
+                                                <span class="header__navbar-user-name"><?php echo $row['TenNhanVien'] ?></span>
+                                                <?php
+                                            }
+                                        }
+                                        else{
+                                            ?>
+                                            <span class="header__navbar-user-name">Tài khoản</span>
+                                            <?php
+                                        }
+                                        ?>
 
                                 <ul class="header__navbar-user-menu">
                                     <li class="header__navbar-user-item">
@@ -251,7 +264,7 @@ if(isset($_POST['btn_thanhtoan'])){
                 <tbody id="productInfo">
                 </tbody>
             </table>
-            <div class="pay">
+            <div class="pay"  >
                   
         
                         <input name="txttongtien" class="txttongtien" type="number" value="0">
