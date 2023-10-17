@@ -385,6 +385,9 @@ cursor: pointer;
             transform: translateY(0)
         }
     }
+    .form-control{
+        width: 200px;
+    }
   
    
 

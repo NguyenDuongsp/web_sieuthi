@@ -14,7 +14,7 @@ if(isset($_POST['btntim'])){
     $sqltk = "SELECT * FROM nhaphang WHERE MaNhapHang like '%$ml%';";
     $data1=mysqli_query($cons, $sqltk);
 }
-$mnh='';$msp=''; $makhohang=''; $soluong='';$ngaynhap='';
+$mnh='';$msp=''; $makhohang=''; $soluong='';$ngaynhap='';$tensp='';$mncc='';$ngaysx='';$hsd='';$anh='';
 // cập nhật
 if(isset($_POST['btnLuu'])){
 
@@ -23,6 +23,10 @@ if(isset($_POST['btnLuu'])){
     
     $soluong=$_POST['txtsoluonghangnhap'];
     $ngaynhap=$_POST['txtngaynhap'];
+    $tensp=$_POST['txttensp'];
+    $mncc=$_POST['txtmncc'];
+    $ngaysx=$_POST['txtnsx'];
+    $hsd=$_POST['txthsd'];
     //ktra dulieu
     if($mnh==''){
        echo "<spript> alert('phai nhap ma nhap hang')</script>";
@@ -34,12 +38,42 @@ if(isset($_POST['btnLuu'])){
            echo "<script>alert('Trùng mã nhập hàng')</script>";
        }
     else{
-        $sql3="INSERT INTO nhaphang VALUES('$mnh', '$msp', '$soluong', '$ngaynhap')";
+        $sql3="INSERT INTO nhaphang (MaNhapHang, MaSanPham, SoLuongNhap, NgayNhap, TenSanPham, MaNhaCungCap, NgaySanXuat, HanSuDung) VALUES('$mnh', '$msp','$tensp','$mncc', '$soluong', '$ngaynhap','$ngaysx', '$hsd')";
         $kq2=mysqli_query($cons,$sql3);
-        if($kq2) echo "<script>alert('Thêm mới thành công!')</script>";
-        else echo "<script>alert('Thêm mới thất bại!')</script>";
+        if (isset($_FILES['image'])) {
+            $errors = array();
+            $file_name = $_FILES['image']['name'];
+            $file_size = $_FILES['image']['size'];
+            $file_tmp = $_FILES['image']['tmp_name'];
+            $file_type = $_FILES['image']['type'];
+            
+            if ($file_size > 2097152) {
+                $errors[] = 'Kích thước file không được lớn hơn 2MB';
+            }
+            
+            $image = $_FILES['image']['name'];
+            $target = "photo/".basename($image);
+            $sql_h5 = "UPDATE nhaphang SET Anh='$image' WHERE MaSanPham='$msp'";
+            $dt_H6 = mysqli_query($cons, $sql_h5);
+            
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+              
+            } 
+        }
+        
+        if($kq2) 
+        {echo "<script>alert('Thêm mới thành công!')</script>";
+        echo "<script>window.location.href='./nhaphang.php'</script>";
+        exit;
+        }
+        else 
+        {echo "<script>alert('Thêm mới thất bại!')</script>";}
     }
     }
+}
+if(isset($_POST['btnnhapexcel'])){
+    echo "<script>window.location.href='./nhapfile_nhaphang.php'</script>";
+    exit;
 }
 
 // excel
@@ -52,8 +86,13 @@ if(isset($_POST['btnxuatexcel'])){
     //Tạo tiêu đề cho cột trong excel
     $sheet->setCellValue('A'.$rowCount,'Mã Nhập Hàng');
     $sheet->setCellValue('B'.$rowCount,'Mã Sản Phẩm');
-    $sheet->setCellValue('C'.$rowCount,'Số Lượng Nhập');
-    $sheet->setCellValue('D'.$rowCount,'Ngày Nhập');
+    $sheet->setCellValue('C'.$rowCount,'Tên Sản Phẩm');
+    $sheet->setCellValue('D'.$rowCount,'Mã Nhà Cung Cấp');
+    $sheet->setCellValue('E'.$rowCount,'Số Lượng Nhập');
+    $sheet->setCellValue('F'.$rowCount,'Ngày Nhập');
+    $sheet->setCellValue('G'.$rowCount,'Ngày Sản Xuất');
+    $sheet->setCellValue('H'.$rowCount,'Hạn Sử Dụng');
+    $sheet->setCellValue('I'.$rowCount,'Ảnh');
    
 
     //định dạng cột tiêu đề
@@ -61,12 +100,17 @@ if(isset($_POST['btnxuatexcel'])){
     $sheet->getColumnDimension('B')->setAutoSize(true);
     $sheet->getColumnDimension('C')->setAutoSize(true);
     $sheet->getColumnDimension('D')->setAutoSize(true);
-   
+    $sheet->getColumnDimension('E')->setAutoSize(true);
+    $sheet->getColumnDimension('F')->setAutoSize(true);
+    $sheet->getColumnDimension('G')->setAutoSize(true);
+    $sheet->getColumnDimension('H')->setAutoSize(true);
+    $sheet->getColumnDimension('I')->setAutoSize(true);
+
 
     //gán màu nền
-    $sheet->getStyle('A'.$rowCount.':D'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
+    $sheet->getStyle('A'.$rowCount.':I'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
     //căn giữa
-    $sheet->getStyle('A'.$rowCount.':D'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->getStyle('A'.$rowCount.':I'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     //Điền dữ liệu vào các dòng. Dữ liệu lấy từ DB
     $ml=$_POST['txttimkiem'];
     $sqltk_6="SELECT * FROM nhaphang WHERE MaNhapHang like '%$ml%'  ";
@@ -76,9 +120,13 @@ if(isset($_POST['btnxuatexcel'])){
         $rowCount++;
         $sheet->setCellValue('A'.$rowCount,$row['MaNhapHang']);
         $sheet->setCellValue('B'.$rowCount,$row['MaSanPham']);
-        $sheet->setCellValue('C'.$rowCount,$row['SoLuongNhap']);
-        $sheet->setCellValue('D'.$rowCount,$row['NgayNhap']);
-      
+        $sheet->setCellValue('C'.$rowCount,$row['TenSanPham']);
+        $sheet->setCellValue('D'.$rowCount,$row['MaNhaCungcap']);
+        $sheet->setCellValue('E'.$rowCount,$row['SoLuongNhap']);
+        $sheet->setCellValue('F'.$rowCount,$row['NgayNhap']);
+        $sheet->setCellValue('G'.$rowCount,$row['NgaySanXuat']);
+        $sheet->setCellValue('H'.$rowCount,$row['HanSuDung']);
+        $sheet->setCellValue('I'.$rowCount,$row['Anh']);
     }
     //Kẻ bảng 
     $styleAray=array(
@@ -88,7 +136,7 @@ if(isset($_POST['btnxuatexcel'])){
             )
         )
         );
-    $sheet->getStyle('A1:'.'G'.($rowCount))->applyFromArray($styleAray);
+    $sheet->getStyle('A1:'.'I'.($rowCount))->applyFromArray($styleAray);
     $objWriter=new PHPExcel_Writer_Excel2007($objExcel);
     $fileName='ExportExcel.xlsx';
     $objWriter->save($fileName);
@@ -124,7 +172,9 @@ mysqli_close($cons);
         }
         /* modal */
 
-
+        img{
+            width: 50px;
+        }
 
 
 
@@ -155,9 +205,15 @@ mysqli_close($cons);
                 <tr>
                     <th>Mã nhập hàng</th>
                     <th>Mã sản phẩm</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Mã Nhà Cung Cấp</th>
                    
                     <th>Số lượng hàng</th>
                     <th>Ngày Nhập</th>
+                    <th>Ngày sản xuất</th>
+                    <th>Hạn sử dụng</th>
+                    <th>Ảnh</th>
+
                     <th>Thao tác</th>
                 </tr>
                 <?php
@@ -169,9 +225,15 @@ mysqli_close($cons);
                     <tr>
                         <td><?php echo $row['MaNhapHang'] ?></td>
                         <td><?php echo $row['MaSanPham'] ?></td>
+                        <td><?php echo $row['TenSanPham'] ?></td>
+                        <td><?php echo $row['MaNhaCungCap'] ?></td>
                         
                         <td><?php echo $row['SoLuongNhap'] ?></td>
                         <td><?php echo date('d/m/Y', strtotime($row['NgayNhap'])) ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($row['NgaySanXuat'])) ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($row['HanSuDung'])) ?></td>
+                        <td><?php echo "<img src='photo/".$row['Anh']."' >";?></td>
+                        
                         <td>
                             <span class="btntool btn btn-primary">
 
@@ -203,7 +265,7 @@ mysqli_close($cons);
                 <div class="modal-close js-modal-close">
                 <i class="fa-solid fa-xmark"></i>
                 </div>
-                    <form method="post" action="">
+                    <form method="post" action="" enctype="multipart/form-data">
                     <table class="table table-borderless`">
                 <tr>
                     <td colspan="2" style="text-align: center;">
@@ -225,8 +287,21 @@ mysqli_close($cons);
                     </td>
                     
                 </tr>
+                <tr>
+                    <td class="col1">Tên sản phẩm</td>
+                    <td class="col2">
+                        <input class="form-control" type="text" name="txttensp"value="<?php echo $tensp ?>" style="width:450px;">
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td class="col1">Mã nhà cung cấp</td>
+                    <td class="col2">
+                        <input class="form-control" type="text" name="txtmncc" value="<?php echo $mncc ?>" style="width:450px;">
+                    </td>
+                </tr>
                 
-                    <tr>
+                <tr>
                     <td class= "col1">Số lượng</td>
                     <td class="col2">
                         <input class="form-control" type="text" name="txtsoluonghangnhap" value="<?php echo $soluong ?>" >
@@ -235,9 +310,32 @@ mysqli_close($cons);
                 <tr>
                     <td class= "col1">Ngày Nhập</td>
                     <td class="col2">
-                        <input class="form-control" type="text" name="txtngaynhap" value="<?php echo $ngaynhap   ?>" >
+                        <input class="form-control" type="date" name="txtngaynhap" value="<?php echo $ngaynhap   ?>" >
                     </td>   
                 </tr>
+                <tr>
+                    <td class= "col1">Ngày sản xuất</td>
+                    <td class="col2">
+                        <input class="form-control" type="date" name="txtnsx" value="<?php echo $nsx ?>" style="width:450px;">
+                    </td>   
+                </tr>
+
+                <tr>
+                    <td class= "col1">Hạn sử dụng</td>
+                    <td class="col2">
+                        <input class="form-control" type="date" name="txthsd" value="<?php echo $hsd ?>" style="width:450px;">
+                    </td>   
+                </tr>
+                <tr>
+                    <td> Hình Ảnh</td>
+                    <td>
+                    <input type="hidden" name="size" value="1000000"> 
+                        <input type="file" name="image"> 
+                        <!-- <button type="submit" name="upload">POST</button> -->
+                        
+                    </td>
+                </tr>
+                
                 <tr>
                     <td class="col1"></td>
                     <td class="col2">

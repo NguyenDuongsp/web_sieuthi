@@ -2,7 +2,7 @@
 include_once'./Classes/PHPExcel.php';
 include_once'./Classes/PHPExcel/IOFactory.php';
 
-$msp=''; $tsp='';$mncc=''; $nsx='';$hsd='';$k=''; $gb='';$dvt='';$lsp='';
+$msp=''; $tsp='';$mncc=''; $nsx='';$hsd='';$k=''; $gb='';$dvt='';$lsp='';$sl='';
 //B1: kết nối đến database
 $con_5=mysqli_connect("localhost","root","","ql_sieuthi")
 or die('Lỗi kết nối');
@@ -14,7 +14,7 @@ $data_5=mysqli_query($con_5, $sql_5);
 //xư lý button tìm kiếm
 if(isset($_POST['btntim'])){
     $msp=$_POST['txttimkiem'];
-    $sqltk_5="SELECT * FROM sanpham WHERE MaSanPham like '%$msp%'";
+    $sqltk_5 = "SELECT * FROM sanpham WHERE MaSanPham LIKE '%$msp%' AND HanSuDung > '$curenDate'";
     $data_5=mysqli_query($con_5, $sqltk_5);
 }
 //Xử lý button luu
@@ -28,7 +28,7 @@ if (isset($_POST['btnLuu'])) {
     $gb = $_POST['txtGiaBan'];
     $dvt = $_POST['txtDonViTinh'];
     $lsp = $_POST['txtLoaiSanPham'];
-    
+    $sl = $_POST['txtSoLuong'];
     // Kiểm tra dữ liệu rỗng (MaSanPham)
     if ($msp == '') {
         echo "<script>alert('Phải nhập mã sản phẩm')</script>";
@@ -40,8 +40,8 @@ if (isset($_POST['btnLuu'])) {
             echo "<script>alert('Trùng mã sản phẩm')</script>";
         } else {
             // Thực hiện câu lệnh INSERT INTO
-            $sql_5 = "INSERT INTO sanpham (MaSanPham, TenSanPham, MaNhaCungCap, NgaySanXuat, HanSuDung, KeHang, GiaBan, DonViTinh, LoaiSanPham) 
-                      VALUES ('$msp', '$tsp', '$mncc', '$nsx', '$hsd','$k', '$gb','$dvt', '$lsp')";
+            $sql_5 = "INSERT INTO sanpham (MaSanPham, TenSanPham, MaNhaCungCap, NgaySanXuat, HanSuDung, KeHang, GiaBan, DonViTinh, LoaiSanPham,SoLuong) 
+                      VALUES ('$msp', '$tsp', '$mncc', '$nsx', '$hsd','$k', '$gb','$dvt', '$lsp','$sl')";
             $kq_5 = mysqli_query($con_5, $sql_5);
             
             // Upload ảnh
@@ -94,7 +94,7 @@ if(isset($_POST['btnxuatexcel'])){
     $sheet->setCellValue('G'.$rowCount,'Giá Bán');
     $sheet->setCellValue('H'.$rowCount,'Đơn Vị Tính');
     $sheet->setCellValue('I'.$rowCount,'Loại Sản Phẩm');
-
+    $sheet->setCellValue('J'.$rowCount,'Số Lượng');
     //định dạng cột tiêu đề
     $sheet->getColumnDimension('A')->setAutoSize(true);
     $sheet->getColumnDimension('B')->setAutoSize(true);
@@ -105,11 +105,11 @@ if(isset($_POST['btnxuatexcel'])){
     $sheet->getColumnDimension('G')->setAutoSize(true);
     $sheet->getColumnDimension('H')->setAutoSize(true);
     $sheet->getColumnDimension('I')->setAutoSize(true);
-
+    $sheet->getColumnDimension('J')->setAutoSize(true);
     //gán màu nền
-    $sheet->getStyle('A'.$rowCount.':I'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
+    $sheet->getStyle('A'.$rowCount.':J'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
     //căn giữa
-    $sheet->getStyle('A'.$rowCount.':I'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->getStyle('A'.$rowCount.':J'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     //Điền dữ liệu vào các dòng. Dữ liệu lấy từ DB
     $msp=$_POST['txtMaSanPham'];
     $tsp=$_POST['txtTenSanPham'];
@@ -127,6 +127,7 @@ if(isset($_POST['btnxuatexcel'])){
         $sheet->setCellValue('G'.$rowCount,$row['GiaBan']);
         $sheet->setCellValue('H'.$rowCount,$row['DonViTinh']);
         $sheet->setCellValue('I'.$rowCount,$row['LoaiSanPham']);
+        $sheet->setCellValue('J'.$rowCount,$row['SoLuong']);
     }
     //Kẻ bảng 
     $styleAray=array(
@@ -136,7 +137,7 @@ if(isset($_POST['btnxuatexcel'])){
             )
         )
         );
-    $sheet->getStyle('A1:'.'G'.($rowCount))->applyFromArray($styleAray);
+    $sheet->getStyle('A1:'.'J'.($rowCount))->applyFromArray($styleAray);
     $objWriter=new PHPExcel_Writer_Excel2007($objExcel);
     $fileName='ExportExcel.xlsx';
     $objWriter->save($fileName);
@@ -213,6 +214,7 @@ mysqli_close($con_5);
                         <th>Giá bán</th>
                         <th>Đơn Vị Tính</th>
                         <th>Loại sản phẩm</th>
+                        <th>Số Lượng</th>
                         <th>Công cụ</th>
                     </tr>
                     <?php
@@ -233,6 +235,7 @@ mysqli_close($con_5);
                             <td><?php echo $row['GiaBan'] ?></td>
                             <td><?php echo $row['DonViTinh'] ?></td>
                             <td><?php echo $row['LoaiSanPham'] ?></td>
+                            <td><?php echo $row['SoLuong'] ?></td>
                             <td>
                                 <span class="btntool btn btn-primary">
 
@@ -258,7 +261,7 @@ mysqli_close($con_5);
                 <i class="fa-solid fa-xmark"></i>
                 </div>
                     <form method="post" action="" enctype="multipart/form-data">
-                    <table>
+                    <table class="table table-borderless`">
                 <tr>
                     <td colspan="2" style="text-align: center;">
                         <h5 >CẬP NHẬT THÔNG TIN SẢN PHẨM</h5>
@@ -277,7 +280,7 @@ mysqli_close($con_5);
                     <td>
                     <input type="hidden" name="size" value="1000000"> 
                         <input type="file" name="image"> 
-                        <button type="submit" name="upload">POST</button>
+                        <!-- <button type="submit" name="upload">POST</button> -->
                         
                     </td>
                 </tr>
@@ -337,7 +340,7 @@ mysqli_close($con_5);
         <select class="form-control" name="txtDonViTinh" style="width: 450px;">
             <option value="">--CHỌN ĐƠN VỊ TÍNH--</option>
             <?php
-            $donvitinh_options = array("Cái", "Gói", "Thùng", "Hộp", "Bịch", "Túi"); // Thay thế bằng danh sách tùy chọn thực tế
+            $donvitinh_options = array("Cái", "Gói", "Thùng", "Hộp", "Bịch", "Túi","Lon","Thỏi"); // Thay thế bằng danh sách tùy chọn thực tế
             foreach ($donvitinh_options as $option) {
                 $selected = ($option == $dvt) ? 'selected' : '';
                 echo "<option value='$option' $selected>$option</option>";
@@ -352,7 +355,7 @@ mysqli_close($con_5);
         <select class="form-control" name="txtLoaiSanPham" style="width: 450px;">
             <option value="">--CHỌN LOẠI SẢN PHẨM--</option>
             <?php
-            $loaisanpham_options = array("Bánh", "Nước Giải khát", "Gia vị", "Kẹo"); // Thay thế bằng danh sách tùy chọn thực tế
+            $loaisanpham_options = array("Đồ ăn vặt", "Nước Giải khát", "Gia vị","Đồ uống có cồn","Mĩ Phẩm","Đồ ăn nhanh"); // Thay thế bằng danh sách tùy chọn thực tế
             foreach ($loaisanpham_options as $option) {
                 $selected = ($option == $lsp) ? 'selected' : '';
                 echo "<option value='$option' $selected>$option</option>";
@@ -361,7 +364,13 @@ mysqli_close($con_5);
         </select>
     </td>
 </tr>
-
+<tr>
+                    <td class= "col1">Số Lượng:</td>
+                    <td class="col2">
+                        <input class="form-control" type="number" name="txtSoLuong" value="<?php echo $sl ?>" style="width:450px;">
+                    </td>   
+                </tr>
+                <tr>
                 <tr>
                     <td class="col1"></td>
                     <td class="col2">

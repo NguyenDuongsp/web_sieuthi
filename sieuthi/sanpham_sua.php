@@ -15,6 +15,7 @@
         $gb = $_POST['txtGiaBan'];
         $dvt = $_POST['txtDonViTinh'];
         $lsp = $_POST['txtLoaiSanPham'];
+        $sl = $_POST['txtSoLuong'];
          //tạo và thực hiện truy vấn chèn dữ liệu vào bảng loaisach
           // Upload ảnh
 if (isset($_FILES['image'])) {
@@ -41,7 +42,7 @@ if (isset($_FILES['image'])) {
 }
 
 // Thực hiện truy vấn cập nhật dữ liệu
-$sql_5 = "UPDATE sanpham SET TenSanPham='$tsp', MaSanPham='$msp', MaNhaCungCap='$mncc', NgaySanXuat='$$nsx', HanSuDung='$hsd',KeHang='$k', GiaBan='$$gb',DonViTinh='$dvt', LoaiSanPham='$lsp' WHERE MaSanPham='$msp'";
+$sql_5 = "UPDATE sanpham SET TenSanPham='$tsp', MaSanPham='$msp', MaNhaCungCap='$mncc', NgaySanXuat='$nsx', HanSuDung='$hsd',KeHang='$k', GiaBan='$gb',DonViTinh='$dvt', LoaiSanPham='$lsp',SoLuong='$sl' WHERE MaSanPham='$msp'";
 $kq_5 = mysqli_query($con_5, $sql_5);
 
 if ($kq_5) {
@@ -86,7 +87,7 @@ if ($kq_5) {
 
     <div class="conten">
         <form method="post" action="">
-            <table>
+            <table class="table table-bordered table-striped" style="height:100vh">
                 <tr>
                     <td colspan="2" style="text-align: center;">
                         <h5 >SỬA THÔNG TIN SẢN PHẨM</h5>
@@ -110,7 +111,7 @@ if ($kq_5) {
                     <td>
                     <input type="hidden" name="size" value="1000000"> 
                         <input type="file" name="image"> 
-                        <button type="submit" name="upload">POST</button>
+                        <!-- <button type="submit" name="upload">POST</button> -->
                         
                     </td>
                 </tr>
@@ -146,7 +147,7 @@ if ($kq_5) {
     <td class="col1">Kệ hàng</td>
     <td class="col2">
         <select class="form-control" name="txtKeHang" style="width:450px;">
-            <option value="">-- Chọn kệ hàng --</option>
+            <option value="">-- CHỌN KỆ HÀNG --</option>
             <option value="Kệ 1" <?php if ($row['KeHang'] == 'Kệ 1') echo 'selected'; ?>>Kệ 1</option>
             <option value="Kệ 2" <?php if ($row['KeHang'] == 'Kệ 2') echo 'selected'; ?>>Kệ 2</option>
             <option value="Kệ 3" <?php if ($row['KeHang'] == 'Kệ 3') echo 'selected'; ?>>Kệ 3</option>
@@ -158,20 +159,23 @@ if ($kq_5) {
                 <tr>
                     <td class= "col1">Giá bán</td>
                     <td class="col2">
-                        <input class="form-control" type="text" name="txtGiaBan" value="<?php echo $row['GiaBan'] ?>" style="width:450px;">
+                        <input class="form-control" type="number" name="txtGiaBan" value="<?php echo $row['GiaBan'] ?>" style="width:450px;">
                     </td>   
                 </tr>
                 <tr>
     <td class="col1">Đơn vị tính</td>
     <td class="col2">
         <select class="form-control" name="txtDonViTinh" style="width:450px;">
-            <option value="">-- Chọn đơn vị tính --</option>
+            <option value="">-- CHỌN ĐƠN VỊ TÍNH --</option>
             <option value="Cái" <?php if ($row['DonViTinh'] == 'Cái') echo 'selected'; ?>>Cái</option>
             <option value="Hộp" <?php if ($row['DonViTinh'] == 'Hộp') echo 'selected'; ?>>Hộp</option>
             <option value="Thùng" <?php if ($row['DonViTinh'] == 'Thùng') echo 'selected'; ?>>Thùng</option>
             <option value="Gói" <?php if ($row['DonViTinh'] == 'Gói') echo 'selected'; ?>>Gói</option>
             <option value="Túi" <?php if ($row['DonViTinh'] == 'Túi') echo 'selected'; ?>>Túi</option>
-            <option value="Bịch" <?php if ($row['DonViTinh'] == 'Bịch') echo 'selected'; ?>>Bịch</option>
+            <option value="Lọ" <?php if ($row['DonViTinh'] == 'Lọ') echo 'selected'; ?>>Lọ</option>
+            <option value="Lon" <?php if ($row['DonViTinh'] == 'Lon') echo 'selected'; ?>>Lon</option>
+            <option value="Thỏi" <?php if ($row['DonViTinh'] == 'Thỏi') echo 'selected'; ?>>Thỏi</option>
+            <option value="Chai" <?php if ($row['DonViTinh'] == 'Chai') echo 'selected'; ?>>Chai</option>
             <!-- Thêm các tùy chọn khác tại đây -->
         </select>
     </td>
@@ -180,15 +184,24 @@ if ($kq_5) {
     <td class="col1">Loại sản phẩm</td>
     <td class="col2">
         <select class="form-control" name="txtLoaiSanPham" style="width:450px;">
-            <option value="">-- Chọn loại sản phẩm --</option>
-            <option value="Gia Vị" <?php if ($row['LoaiSanPham'] == 'Gia Vị') echo 'selected'; ?>>Gia Vị</option>
+            <option value="">-- CHỌN LOẠI SẢN PHẨM --</option>
+            <option value="Gia Vị"          <?php if ($row['LoaiSanPham'] == 'Gia Vị')         echo 'selected'; ?>>Gia Vị</option>
             <option value="Nước Giải Khát " <?php if ($row['LoaiSanPham'] == 'Nước Giải Khát') echo 'selected'; ?>>Nước Giải Khát</option>
-            <option value="Bánh" <?php if ($row['LoaiSanPham'] == 'Bánh') echo 'selected'; ?>>Bánh</option>
+            <option value="Đồ ăn vặt"       <?php if ($row['LoaiSanPham'] == 'Đồ ăn vặt')      echo 'selected'; ?>>Đồ ăn vặt</option>
+            <option value="Mĩ Phẩm"         <?php if ($row['LoaiSanPham'] == 'Mĩ Phẩm')        echo 'selected'; ?>>Mĩ Phẩm</option>
+            <option value="Đồ uống có cồn " <?php if ($row['LoaiSanPham'] == 'Đồ uống có cồn') echo 'selected'; ?>>Đồ uống có cồn</option>
+            <option value="Đồ ăn nhanh " <?php if ($row['LoaiSanPham'] == 'Đồ ăn nhanh') echo 'selected'; ?>>Đồ ăn nhanh</option>
+            
             <!-- Thêm các tùy chọn khác tại đây -->
         </select>
     </td>
 </tr>
-
+<tr>
+                    <td class= "col1">Số Lượng</td>
+                    <td class="col2">
+                        <input class="form-control" type="number" name="txtSoLuong" value="<?php echo $row['SoLuong'] ?>" style="width:450px;">
+                    </td>   
+                </tr>
                 <?php            
                         }
                     }
@@ -204,5 +217,13 @@ if ($kq_5) {
             </table>
         </form>
     </div>
+    <style>
+        .search-add-filter{
+            display: none;
+        }
+        .form-control{
+            width: 200px;
+        }
+    </style>
 </body>
 </html>

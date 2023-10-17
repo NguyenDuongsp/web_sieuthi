@@ -12,11 +12,13 @@
 		$sheet=$objExcel->getSheet(0);
 		$sheetData=$sheet->toArray(null,true,true,true);
 		for($i=2;$i<=count($sheetData);$i++){
-			$mnh=$sheetData[$i]["A"];
-			$msp=$sheetData[$i]["B"];
+			$msp=$sheetData[$i]["A"];
+			$tsp=$sheetData[$i]["B"];
 			$sl=$sheetData[$i]["C"];
-            $nn=$sheetData[$i]["D"];
-			$sql_9="INSERT INTO nhaphang VALUES('$mnh','$msp','$sl','$nn')";
+            $mnn=$sheetData[$i]["D"];
+            $nnk=$sheetData[$i]["E"];
+            $mncc = $sheetData[$i]["F"];
+			$sql_9="INSERT INTO nhaphang VALUES('$msp','$tsp','$sl','$mnn','$mncc')";
 			$connnn->query($sql_9);
 		}
 		echo "<script>alert('Thêm mới thành công!')</script>";

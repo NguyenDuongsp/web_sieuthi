@@ -44,7 +44,10 @@ $data2=mysqli_query($connn,$sql2);
 }
 }
 //xư lý button tìm kiếm
-
+if(isset($_POST['btnnhapexcel'])){
+    echo "<script>window.location.href='./nhapfile_nhaphang.php'</script>";
+    exit;
+}
  //Xu li xuat excel
  if(isset($_POST['btnxuatexcel'])){
 
@@ -206,7 +209,7 @@ mysqli_close($connn);
                     <i class="fa-solid fa-xmark"></i>
                     </div>
                         <form method="post" action="">
-                        <table>
+                        <table class="table table-striped">
     <tr>
                         <td colspan="2" style="text-align: center;">
                         <h5>

@@ -1,8 +1,18 @@
 <?php 
+session_start();
 $con=mysqli_connect("localhost","root","","ql_sieuthi")
 or die('Lỗi kết nối');
-
-    $result = mysqli_query($con, "SELECT * FROM sanpham");
+$sql_banhang="SELECT sp.MaSanPham, sp.TenSanPham, sp.MaNhaCungCap, sp.Anh, sp.NgaySanXuat, sp.HanSuDung, sp.GiaBan, km.PhanTramKhuyenMai
+FROM sanpham AS sp
+LEFT JOIN khuyenmai AS km ON sp.MaSanPham = km.MaSanPham";
+$result = mysqli_query($con, $sql_banhang);
+if (isset($_SESSION['username'])) {
+    if(isset($_POST['btnthemgiohang'])){
+        $tensp= $_POST['txttensp'];
+        $giasp= $_POST['txtgiasp'];
+        $tk = $_SESSION['username'];
+    
+  }}
 ?>
 
 <!DOCTYPE html>
@@ -278,19 +288,22 @@ or die('Lỗi kết nối');
                                 </h3>
                                 <ul class="category-list">
                                     <li class="category-item category-item--active">
-                                        <a href="#" class="category-item__link">Sắc đẹp</a>
+                                        <a href="#" class="category-item__link">Mỳ ăn liền</a>
                                     </li>
                                     <li class="category-item">
                                         <a href="#" class="category-item__link">Chăm sóc da mặt</a>
                                     </li>
                                     <li class="category-item">
-                                        <a href="#" class="category-item__link">Trang điểm</a>
+                                        <a href="#" class="category-item__link">Đồ dùng cá nhân</a>
                                     </li>
                                     <li class="category-item">
                                         <a href="#" class="category-item__link">Chăm sóc tóc</a>
                                     </li>
                                     <li class="category-item">
-                                        <a href="#" class="category-item__link">Nước hoa</a>
+                                        <a href="#" class="category-item__link">Đồ dùng nhà bếp</a>
+                                    </li>
+                                    <li class="category-item">
+                                        <a href="#" class="category-item__link">Sữa</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -338,52 +351,59 @@ or die('Lỗi kết nối');
                                     <!-- product item -->
 <?php 
                                 
-    $con=mysqli_connect("localhost","root","","ql_sieuthi")
-    or die('Lỗi kết nối');
-    // $msp = $_POST['txtMaSanPham'];
-        $result = mysqli_query($con, "SELECT * FROM sanpham");
+  
                                  
     for ($i = 0; $i < 10; $i++) {
         $row = mysqli_fetch_assoc($result);
     
         if ($row) {
+            if($row['PhanTramKhuyenMai'] == null)
+            {
+                $row['PhanTramKhuyenMai'] = 0;
+                $giabannew = $row['GiaBan'] ;
+            }
+            else{  
+                $giabannew = $row['GiaBan'] * ( $row['PhanTramKhuyenMai'] / 100);
+            }
             echo '<a class="home-product-item" href="#"  onclick="showModal(\'' . $row['TenSanPham'] . '\', \'' . $row['Anh'] . '\', \'' . $row['GiaBan'] . '\')">
-                    <form method="POST" action="upload.php" enctype="multipart/form-data"> 
-                        <div class="grid__column-2-4">
-                            <div class="home-product-item__img" style="background-image: url(photo/' . $row['Anh'] . ');"></div>
-                        </form> 
-                        <h4 class="home-product-item__name">' . $row['TenSanPham'] . '</h4>
-                        <div class="home-product-item__price">
-                            <span class="home-product-item__price-old">' . $row['GiaBan'] . '</span>
-                            <span class="home-product-item__price-new">1.080.000</span>
-                        </div>
-                        <div class="home-product-item__action">
-                            <div class="home-product-item__rating">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <h4 class="home-product-item__sold">Đã bán 60k</h4>
-                        </div>
-                        <h4 class="home-product-item__origin">Hà Nội</h4>
-                        <div class="home-product-item__favorite">
-                            <i class="fa-solid fa-check"></i>
-                            <span>Yêu thích</span>
-                        </div>
-                        <div class="home-product-item__sale-off">
-                            <span class="home-product-item__sale-off-percent">10%</span>
-                            <span class="home-product-item__sale-off-label">GIẢM</span>
-                        </div>
-                    </a>
-                </div>';
+                <form method="POST" action="upload.php" enctype="multipart/form-data"> 
+                    <div class="grid__column-1-5">
+                    <div class="home-product-item__img" style="background-image: url(photo/' . $row['Anh'] . ');"></div>
+                    
+                </form> 
+                <h4 class="home-product-item__name">' . $row['TenSanPham'] . '</h4>
+                <div class="home-product-item__price">
+                    <span class="home-product-item__price-old">' . $row['GiaBan'] . '</span>
+                    <span class="home-product-item__price-new">'.$giabannew.'</span>
+                </div>
+                <div class="home-product-item__action">
+                    <div class="home-product-item__rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4 class="home-product-item__sold">Đã bán 60k</h4>
+                </div>
+                <h4 class="home-product-item__origin">Hà Nội</h4>
+                <div class="home-product-item__favorite">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Yêu thích</span>
+                </div>
+                <div class="home-product-item__sale-off">
+                    <span class="home-product-item__sale-off-percent">'.  $row['PhanTramKhuyenMai'].'%</span>
+                    <span class="home-product-item__sale-off-label">GIẢM</span>
+                </div>
+            </a>
+        </div>';
         } else {
             break; // Nếu không còn dữ liệu, thoát khỏi vòng lặp
         }
     }
     mysqli_close($con);
 ?>
+
                                   
                                    
                             </div>
@@ -399,35 +419,64 @@ or die('Lỗi kết nối');
   <div class="modal-contentner">
     <span class="close" onclick="closeModal()">&times;</span>
     <div id="modalProductInfo">
-      <h2 id="modalProductName"></h2>
-      <img id="modalProductImage" src="" alt="Product Image">
-      <p id="modalProductPrice"></p>
+    '<a class="home-product-item" href="#">
+      <div class="grid__column-1-5">
+           <img id="modalProductImage" class="home-product-item__img" src="" alt="Product Image">
+                    
+               
+<input type="text" name="txttensp" class="home-product-item__name" id="modalProductNameInput" readonly>
+                <div class="home-product-item__price">
+                <input type="text" name="txtgiasp" class="home-product-item__price-old" id="modalProductPriceInput" readonly>
+                    <span class="home-product-item__price-new"></span>
+                </div>
+                <div class="home-product-item__action">
+                    <div class="home-product-item__rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4 class="home-product-item__sold">Đã bán 60k</h4>
+                </div>
+                <h4 class="home-product-item__origin">Hà Nội</h4>
+                <div class="home-product-item__favorite">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Yêu thích</span>
+                </div>
+                <div class="home-product-item__sale-off">
+                    <span class="home-product-item__sale-off-percent">%</span>
+                    <span class="home-product-item__sale-off-label">GIẢM</span>
+                </div>
+            </a>
+        </div>';
       <div class="modal-buttons">
-        <button onclick="addToCart()">Thêm vào giỏ hàng</button>
-        <button onclick="buyNow()">Mua ngay</button>
+        <button name="btnthemgiohang" onclick="addToCart()">Thêm vào giỏ hàng</button>
+        <button name="btnmuangay" onclick="buyNow()">Mua ngay</button>
       </div>
     </div>
   </div>
 </div>
-
 <script>
-    function showModal(name, image, price) {
-        var modal = document.getElementById("productModal");
-        var modalProductName = document.getElementById("modalProductName");
-        var modalProductImage = document.getElementById("modalProductImage");
-        var modalProductPrice = document.getElementById("modalProductPrice");
+function showModal(name, image, price) {
+    var modal = document.getElementById("productModal");
+    var modalProductName = document.getElementById("modalProductName");
+    var modalProductImage = document.getElementById("modalProductImage");
+    var modalProductPrice = document.getElementById("modalProductPrice");
+    var modalProductNameInput = document.getElementById("modalProductNameInput");
+    var modalProductPriceInput = document.getElementById("modalProductPriceInput");
 
-        modalProductName.innerHTML = name;
-        modalProductImage.src = "photo/" + image;
-        modalProductPrice.innerHTML = price;
+    modalProductNameInput.value = name;
+    modalProductImage.src = "photo/" + image;
+    modalProductPriceInput.value = price;
 
-        modal.style.display = "flex";
-    }
+    modal.style.display = "flex";
+  }
 
-    function closeModal() {
-        var modal = document.getElementById("productModal");
-        modal.style.display = "none";
-    }
+  function closeModal() {
+    var modal = document.getElementById("productModal");
+    modal.style.display = "none";
+  }
 </script>
                             <ul class="pagination home-product__pagination">
                                 <li class="pagination-item">

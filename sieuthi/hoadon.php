@@ -184,6 +184,10 @@ mysqli_close($con4n);
 
                                 <a href="./xoahd.php?MaHoaDon=<?php echo $row['MaHoaDon']?>">Xóa</a>
                             </span>
+                            <span class="btntool btn btn-danger">
+
+                                <a href="./hoadonxem.php?MaHoaDon=<?php echo $row['MaHoaDon']?>">Xem</a>
+                            </span>
                         </td>
                     </tr>
                 <?php        
@@ -225,6 +229,12 @@ mysqli_close($con4n);
                         <td class = "col1">Mã khách hàng</td>
                         <td class = "col2">
                             <input class="form-control" type="text"name ="txtmakh"value="<?php echo $mkh?>" style="width:450px">
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td class = "col1">Mã Sản Phẩm</td>
+                        <td class = "col2">
+                            <input class="form-control" type="text"name ="txtMaSanPham"value="<?php echo $msp?>" style="width:450px">
                         </td>
                     </tr> 
                    <tr>

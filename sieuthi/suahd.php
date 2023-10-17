@@ -56,7 +56,7 @@ if (isset($_POST['btnLuu'])) {
 
     <div class="conten">
         <form method="post" action="">
-            <table  class="table table-striped">
+            <table class="table table-bordered table-striped" style="height:90vh">
                 <tr>
                     <td colspan="2" style="text-align: center;">
                         <h5>Sửa Thông Tin Hóa Đơn</h5>
@@ -107,5 +107,14 @@ if (isset($_POST['btnLuu'])) {
             </table>
         </form>
     </div>
+    <style>
+        .search-add-filter{
+            display: none;
+        }
+        .form-control{
+            width:200px;
+        }
+    </style>
+
 </body>
 </html>

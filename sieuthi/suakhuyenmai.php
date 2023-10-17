@@ -1,80 +1,95 @@
 <?php
-$mkm="";$tenkm="";$ngaybatdau="";$ngayketthuc="";$phantramkhuyenmai="";$mota="";
-    //B1: kết nối đến database
-$consss=mysqli_connect("localhost","root","","ql_sieuthi")
-or die('Lỗi kết nối');
-//tạo và thực hiện truy vấn
+$mkm = "";
+$tenkm = "";
+$ngaybatdau = "";
+$ngayketthuc = "";
+$phantramkhuyenmai = "";
+$mota = "";
 
-    $mkm = $_GET['MaKhuyenMai'];
-   
-$sql4=" SELECT * FROM khuyenmai where MaKhuyenMai='$mkm'";
-$data4=mysqli_query($consss, $sql4);
-//xư lý button 
-if(isset($_POST['btnLuu'])){
+// Bước 1: Kết nối đến cơ sở dữ liệu
+$consss = mysqli_connect("localhost", "root", "", "ql_sieuthi") or die('Lỗi kết nối');
 
-    $mkm=$_POST['txtmakm'];
-   
-    $tenkm=$_POST['txttkm'];
-    $ngaybatdau=$_POST['txtngaybatdau'];
-    $ngayketthuc=$_POST['txtngayketthuc'];
-    $phantramkhuyenmai=$_POST['txttile'];
-    $mota=$_POST['txtmota'];
+// Bước 2: Lấy giá trị MaKhuyenMai từ URL
+$mkm = $_GET['MaKhuyenMai'];
 
-    $sql5="UPDATE khuyenmai set MaKhuyenMai='$mkm',
-     TenKhuyenMai='$tenkm', NgayBatDau='$ngaybatdau', NgayKetThuc = '$ngayketthuc', PhanTramKhuyenMai = '$phantramkhuyenmai', MoTa = '$mota' 
-     where MaKhuyenMai='$mkm'";
-     
-     $kq4=mysqli_query($consss,$sql5);
-     if($kq4){
+// Bước 3: Lấy thông tin khuyến mãi từ cơ sở dữ liệu
+$sql4 = "SELECT * FROM khuyenmai WHERE MaKhuyenMai='$mkm'";
+$data4 = mysqli_query($consss, $sql4);
+
+// Xử lý khi nhấn nút "Lưu"
+if (isset($_POST['btnLuu'])) {
+    $mkm = $_POST['txtmakm'];
+    $msp = $_POST['ddLoaisach'];
+    $ngaybatdau = $_POST['txtngaybatdau'];
+    $ngayketthuc = $_POST['txtngayketthuc'];
+    $phantramkhuyenmai = $_POST['txttile'];
+    $mota = $_POST['txtmota'];
+
+    // Cập nhật thông tin khuyến mãi trong cơ sở dữ liệu
+    $sql5 = "UPDATE khuyenmai SET MaKhuyenMai='$mkm', MaSanPham='$msp', NgayBatDau='$ngaybatdau', NgayKetThuc='$ngayketthuc', PhanTramKhuyenMai='$phantramkhuyenmai' WHERE MaKhuyenMai='$mkm'";
+    $kq4 = mysqli_query($consss, $sql5);
+
+    if ($kq4) {
         header("location: khuyenmai.php");
         exit;
-     }
-     else{
+    } else {
         echo "<script>alert('Sửa thất bại!')</script>";
-     }
+    }
 }
 
-//đóng kết nối
+// Truy vấn danh sách sản phẩm
+$slq_msp = "SELECT * FROM sanpham";
+$dt = mysqli_query($consss, $slq_msp);
+
+// Đóng kết nối cơ sở dữ liệu
 mysqli_close($consss);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sửa thông tin khuyến mãi</title>
 </head>
 <body>
-    <?php 
-    include_once './contac.php'
-    ?>
-    <div class="conten">
+    <?php include_once './contac.php'; ?>
 
+    <div class="conten">
         <form method="post" action="">
-            <table>
+            <table class="table table-bordered table-striped" style="height:100vh">
                 <tr>
                     <td colspan="2" style="text-align: center;">
-                        <h5 >SỬA THÔNG TIN KHUYẾN MÃI </h5>
+                        <h5>SỬA THÔNG TIN KHUYẾN MÃI</h5>
                     </td>
                 </tr>
 
                 <?php
-                    if(isset($data4)&& $data4!=null){
-                        while($row=mysqli_fetch_array($data4)){
-                    ?>  
+                if (isset($data4) && $data4 != null) {
+                    while ($row = mysqli_fetch_array($data4)) {
+                ?>
                         <tr>
                             <td class="col1">Mã khuyến mãi</td>
                             <td class="col2">
-                                <input class="form-control" type="text" name="txtmakm" value="<?php echo $row['MaKhuyenMai'] ?>" style="width:450px;">
+                                <input class="form-control" type="text" name="txtmakm" value="<?php echo $row['MaKhuyenMai'] ?>" style="width: 450px;">
                             </td>
-        
                         </tr>
                         <tr>
-                            <td class="col1">Tên khuyến mãi</td>
+                            <td class="col1">Mã Sản Phẩm</td>
                             <td class="col2">
-                                <input class="form-control" type="text" name="txttkm"value="<?php echo $row['TenKhuyenMai'] ?>" style="width:450px;">
+                                <select class="form-control" name="ddLoaisach">
+                                    <option value="">-- Chọn loại sách --</option>
+                                    <?php
+                                    if (isset($dt) && $dt != null) {
+                                        while ($row2 = mysqli_fetch_array($dt)) {
+                                    ?>
+                                            <option value="<?php echo $row2['MaSanPham'] ?>" <?php if ($row2['MaSanPham'] == $row['MaSanPham']) echo 'selected'; ?>><?php echo $row2['MaSanPham'] ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
                             </td>
-                            
                         </tr>
                        
                             <tr>
@@ -95,12 +110,7 @@ mysqli_close($consss);
                                 <input class="form-control" type="number" name="txttile" value="<?php echo $row['PhanTramKhuyenMai']  ?>" style="width:450px;">
                             </td>   
                         </tr>
-                        <tr>
-                            <td class= "col1">Mô tả</td>
-                            <td class="col2">
-                                <input class="form-control" type="date" name="txtmota" value="<?php echo $row['MoTa']  ?>" style="width:450px;">
-                            </td>   
-                        </tr>
+                       
                         <?php            
                         }
                     }
@@ -116,5 +126,14 @@ mysqli_close($consss);
             </table>
         </form>
     </div>
+    <style>
+        .search-add-filter{
+            display: none;
+        }
+        .form-control{
+            width: 200px;
+        }
+    </style>
+
 </body>
 </html>

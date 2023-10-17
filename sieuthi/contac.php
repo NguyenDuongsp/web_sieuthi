@@ -208,7 +208,7 @@ if (isset($_SESSION['username'])) {
                                             </li>
                                             
                                             <li class="list_excel--item header__navbar-user-item--separate">
-                                                <button >Nhập excel</button>
+                                                <button name="btnnhapexcel" >Nhập excel</button>
                                             </li>
                                         </ul>
                                     </div>

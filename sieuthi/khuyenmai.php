@@ -20,11 +20,11 @@ if(isset($_POST['btntim'])){
 if(isset($_POST['btnLuu'])){
 
     $mkm=$_POST['txtmakm'];
-    $tenkm=$_POST['txttkm'];  
+    $msp=$_POST['txtmsp'];  
     $ngaybatdau=$_POST['txtngaybatdau'];
     $ngayketthuc=$_POST['txtngayketthuc'];
     $phantramkhuyenmai=$_POST['txttile'];
-    $mota=$_POST['ttxmota'];
+    
     //ktra dulieu
     if($mkm==''){
        echo "<spript> alert('phai nhap ma nhap hang')</script>";
@@ -36,13 +36,25 @@ if(isset($_POST['btnLuu'])){
            echo "<script>alert('Trùng mã nhập hàng')</script>";
        }
     else{
-        $sql3="INSERT INTO khuyenmai VALUES('$mkm', '$tenkm', '$ngaybatdau', '$ngayketthuc',' $phantramkhuyenmai', '$mota')";
+        $sql3="INSERT INTO khuyenmai VALUES('$mkm', '$msp', '$ngaybatdau', '$ngayketthuc',' $phantramkhuyenmai')";
         $kq3=mysqli_query($cons1,$sql3);
-        if($kq3) echo "<script>alert('Thêm mới thành công!')</script>";
-        else echo "<script>alert('Thêm mới thất bại!')</script>";
+        if($kq3)
+        {
+
+            echo "<script>alert('Thêm mới thành công!')</script>";
+           echo "<script>window.location.href='./Quanlysanpham.php'</script>";
+           exit;
+        }
+        else
+        {
+        } echo "<script>alert('Thêm mới thất bại!')</script>";
+            
     }
     }
 }
+// lấy masp bên sản phẩm
+$slq_msp = "SELECT * FROM sanpham where MaSanPham Not in (SELECT MaSanPham from khuyenmai )";
+$dt = mysqli_query($cons1, $slq_msp);
 //excel
 if(isset($_POST['btnxuatexcel'])){
 
@@ -53,11 +65,11 @@ if(isset($_POST['btnxuatexcel'])){
     $rowCount=2;
     //Tạo tiêu đề cho cột trong excel
     $sheet->setCellValue('A'.$rowCount,'Mã Khuyến Mãi');
-    $sheet->setCellValue('B'.$rowCount,'Tên Khuyến Mãi');
+    $sheet->setCellValue('B'.$rowCount,'Mã Sản Phẩm');
     $sheet->setCellValue('C'.$rowCount,'Ngày Bắt Đầu');
     $sheet->setCellValue('D'.$rowCount,'Ngày Kết Thúc');
     $sheet->setCellValue('E'.$rowCount,'Phần Trăm Khuyến Mãi');
-    $sheet->setCellValue('F'.$rowCount,'Mô Tả');
+   
     
     //định dạng cột tiêu đề
     $sheet->getColumnDimension('A')->setAutoSize(true);
@@ -65,11 +77,11 @@ if(isset($_POST['btnxuatexcel'])){
     $sheet->getColumnDimension('C')->setAutoSize(true);
     $sheet->getColumnDimension('D')->setAutoSize(true);
     $sheet->getColumnDimension('E')->setAutoSize(true);
-    $sheet->getColumnDimension('F')->setAutoSize(true);
+    
     //gán màu nền
-    $sheet->getStyle('A'.$rowCount.':F'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
+    $sheet->getStyle('A'.$rowCount.':E'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
     //căn giữa
-    $sheet->getStyle('A'.$rowCount.':F'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->getStyle('A'.$rowCount.':E'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     //Điền dữ liệu vào các dòng. Dữ liệu lấy từ DB
     $mkm=$_POST['txtmakm'];
     
@@ -79,11 +91,11 @@ if(isset($_POST['btnxuatexcel'])){
         $rowCount++;
      
         $sheet->setCellValue('A'.$rowCount,$row['MaKhuyenMai']);
-        $sheet->setCellValue('B'.$rowCount,$row['TenKhuyenMai']);
+        $sheet->setCellValue('B'.$rowCount,$row['MaSanPham']);
         $sheet->setCellValue('C'.$rowCount,$row['NgayBatDau']);
         $sheet->setCellValue('D'.$rowCount,$row['NgayKetThuc']);
         $sheet->setCellValue('E'.$rowCount,$row['PhanTramKhuyenMai']);
-        $sheet->setCellValue('F'.$rowCount,$row['MoTa']);
+       
         
     }
     //Kẻ bảng 
@@ -94,7 +106,7 @@ if(isset($_POST['btnxuatexcel'])){
             )
         )
         );
-    $sheet->getStyle('A2:'.'F'.($rowCount))->applyFromArray($styleAray);
+    $sheet->getStyle('A2:'.'E'.($rowCount))->applyFromArray($styleAray);
     $objWriter=new PHPExcel_Writer_Excel2007($objExcel);
     $fileName='ExportExcel.xlsx';
     $objWriter->save($fileName);
@@ -162,11 +174,11 @@ mysqli_close($cons1);
                     </tr>
                 <tr>
                     <th>Mã khuyến mãi</th>
-                    <th>Tên khuyến mãi</th>
+                    <th>Mã Sản Phẩm</th>
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
                     <th>Phần trăm khuyến mãi</th>
-                    <th>Mô tả</th>
+                  
                     <th>Thao Tác</th>
                 </tr>
                 <?php
@@ -177,12 +189,12 @@ mysqli_close($cons1);
                 ?>
                     <tr>
                         <td><?php echo $row['MaKhuyenMai'] ?></td>
-                        <td><?php echo $row['TenKhuyenMai'] ?></td>
+                        <td><?php echo $row['MaSanPham'] ?></td>
                         
                         <td><?php echo date('d/m/Y', strtotime($row['NgayBatDau'])) ?></td>
                         <td><?php echo date('d/m/Y', strtotime($row['NgayKetThuc'])) ?></td>
                         <td><?php echo $row['PhanTramKhuyenMai'] ?></td>
-                        <td><?php echo $row['MoTa'] ?></td>
+                     
                         <td>
                             <span class="btntool btn btn-primary">
 
@@ -230,12 +242,22 @@ mysqli_close($cons1);
 
                 </tr>
                 <tr>
-                    <td class="col1">Tên Khuyến Mãi</td>
-                    <td class="col2">
-                        <input class="form-control" type="text" name="txttkm"value="<?php echo $tenkm ?>" >
-                    </td>
-                    
-                </tr>
+                            <td class="col1">Mã Sản Phẩm</td>
+                            <td class="col2">
+                                <select class="form-control" name="txtmsp">
+                                    <option value="">-- Chọn loại sách --</option>
+                                    <?php
+                                    if (isset($dt) && $dt != null) {
+                                        while ($row2 = mysqli_fetch_array($dt)) {
+                                    ?>
+                                            <option  value="<?php echo $row2['MaSanPham'] ?>" ><?php echo $row2['MaSanPham'] ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </td>
+                        </tr>
                 
                     <tr>
                     <td class= "col1">Ngày Bắt Đầu</td>
@@ -256,12 +278,7 @@ mysqli_close($cons1);
                         <input class="form-control" type="number" name="txttile" value="<?php echo $phantramkhuyenmai   ?>" >
                     </td>   
                 </tr>
-                <tr>
-                    <td class= "col1">Mô Tả</td>
-                    <td class="col2">
-                        <input class="form-control" type="text" name="ttxmota" value="<?php echo $mota  ?>" >
-                    </td>   
-                </tr>
+              
                 <tr>
                     <td class="col1"></td>
                     <td class="col2">

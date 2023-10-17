@@ -50,7 +50,7 @@
 
     <div class="conten">
         <form method="post" action="">
-            <table>
+            <table class="table table-bordered table-striped" style="height:100vh">
                 <tr>
                     <td colspan="2" style="text-align: center;">
                         <h5 >SỬA THÔNG TIN KHÁCH HÀNG</h5>
@@ -114,5 +114,13 @@
             </table>
         </form>
     </div>
+    <style>
+        .search-add-filter{
+            display: none;
+        }
+        .form-control{
+            width: 200px;
+        }
+    </style>
 </body>
 </html>

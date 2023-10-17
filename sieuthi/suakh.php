@@ -47,12 +47,13 @@ if (isset($_POST['btnLuu'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sửa Thông Tin Kho Hàng</title>
-    <link rel="stylesheet" href="./bootstrap.min.css">
+   
 </head>
 <body>
-    <div class="conten ">
-        <form class="" method="post" action="">
-            <table  class="table table-striped">
+    <form class="" method="post" action="">
+        <?php include_once './contac.php' ?>
+        <div class="conten ">
+            <table class="table table-bordered table-striped" style="height:100vh">
                 <tr>
                     <td colspan="2" style="text-align: center;">
                         <h5>Sửa Thông Tin Kho Hàng</h5>
@@ -107,12 +108,20 @@ if (isset($_POST['btnLuu'])) {
                 <tr>
                     <td class="col1"></td>
                     <td class="col2">
-                        <input class="btn btn-primary" type="submit" name="btnLuu" value ="Lưu">
+                        <input style ="font-size: 15px;" class="btn btn-primary" type="submit" name="btnLuu" value ="Lưu">
                         
                     </td>
                 </tr>
             </table>
         </form>
     </div>
+    <style>
+        .search-add-filter{
+            display: none;
+        }
+        .form-control{
+            width: 200px;
+        }
+    </style>
 </body>
 </html>
