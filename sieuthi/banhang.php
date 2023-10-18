@@ -23,7 +23,8 @@ if (isset($_POST['btn_thanhtoan'])) {
     for ($i = 0; $i < count($msp); $i++) {
         $msp_value = $msp[$i];
         $sl_value = $sl[$i];
-        $sql .= " (CONCAT('MD', UUID()), '$msp_value', '$sl_value', '$mkh', '$tongtien', '$currentDate'),";
+        $mhd = "MD" . uniqid();
+        $sql .= " ('$mhd', '$msp_value', '$sl_value', '$mkh', '$tongtien', '$currentDate'),";
     }
     $sql = rtrim($sql, ","); // Xóa dấu phẩy cuối cùng
 
