@@ -372,6 +372,7 @@ mysqli_close($cons);
               modal.classList.remove('open')
               var form = document.querySelector('form');
           form.submit();
+          
        }
         
             

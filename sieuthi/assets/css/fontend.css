@@ -22,6 +22,12 @@
     font-weight: 50px;
 
 }
+.txtkohien{
+    display: none;
+}
+ .msp{
+    display: none
+}
 .are_scroll{
     position: fixed;
     overflow-y: scroll;

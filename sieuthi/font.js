@@ -10,11 +10,11 @@ for (let i = 0; i < productList.length; i++) {
         var productPrice = productItem.querySelector(".home-product-item__price-new").textContent;
         var productName = productItem.querySelector(".home-product-item__name").textContent;
         var productCode = productItem.querySelector(".msp").textContent;
-        var productQuantity = productItem.querySelector(".soluong").textContent;
-        addProduct(productImg, productName, productPrice, productCode, productQuantity );
+        
+        addProduct(productImg, productName, productPrice, productCode );
     });
 }
-function addProduct(productImg, productName, productPrice, productCode, productQuantity ) {
+function addProduct(productImg, productName, productPrice, productCode ) {
     var add = document.createElement("tr");
     var content = '<tr>' +
        '<td style="display: flex; align-items:center"><img style="width:50px" src="' + productImg + '" alt=""></td>' +
@@ -22,9 +22,9 @@ function addProduct(productImg, productName, productPrice, productCode, productQ
        '<td><p><span>' + productPrice + '</span><sup>đ</sup></p></td>' +
        '<td>' +
       
-       '<input name= "txtsl[]" class="txtsl" type="number" value="1" min =" 1" max = "'+ productQuantity +'">' +
-       
        '<button class="btn-minus">-</button>' +
+       '<input name= "txtsl[]" class="txtsl" type="number" value="1">' +
+       '<button class="btn-plus">+</button>' +
        '</td>' +
        '<td>' +
        '<input class="txtkohien" name="txtmasp[]" type="text" value="' + productCode + '">' +
@@ -63,33 +63,33 @@ function increaseQuantity(button) {
     var currentValue = parseInt(input.value);
     input.value = currentValue + 1;
     carttol();
-    var formElement = document.querySelector('form');
-    formElement.addEventListener('submit', function(event) {
-        event.preventDefault();
-    })
 }
 
-
-function inputchange() {
-    var cartItemm = document.querySelectorAll("#productInfo tr");
-    for (var i = 0; i < cartItemm.length; i++) {
-        var input = cartItemm[i].querySelector('.txtsl');
-        input.removeEventListener('input', updateQuantity);
-        input.addEventListener('input', updateQuantity);
-    }
-}
-
-function updateQuantity() {
-    var input = this;
+function decreaseQuantity(button) {
+    var input = button.parentNode.querySelector('.txtsl');
     var currentValue = parseInt(input.value);
-    if (currentValue >= 0) {
-        input.value = currentValue;
+    if (currentValue > 0) {
+        input.value = currentValue - 1;
         carttol();
-        if (currentValue === 0) {
-            var tr = input.parentNode.parentNode;
+        if (currentValue - 1 === 0) {
+            var tr = button.parentNode.parentNode;
             tr.parentNode.removeChild(tr);
         }
     }
 }
 
-
+function inputchange() {
+    var cartItemm = document.querySelectorAll("#productInfo tr");
+    for (var i = 0; i < cartItemm.length; i++) {
+        var minusButton = cartItemm[i].querySelector(".btn-minus");
+        var plusButton = cartItemm[i].querySelector(".btn-plus");
+        minusButton.removeEventListener("click", decreaseQuantity);
+        plusButton.removeEventListener("click", increaseQuantity);
+        minusButton.addEventListener("click", function() {
+            decreaseQuantity(this);
+        });
+        plusButton.addEventListener("click", function() {
+            increaseQuantity(this);
+        });
+    }
+}
