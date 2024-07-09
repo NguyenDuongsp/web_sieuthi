@@ -14,7 +14,7 @@ if(isset($_POST['btntim'])){
     $sqltk = "SELECT * FROM nhaphang WHERE MaNhapHang like '%$ml%';";
     $data1=mysqli_query($cons, $sqltk);
 }
-$mnh='';$msp=''; $makhohang=''; $soluong='';$ngaynhap='';$tensp='';$mncc='';$ngaysx='';$hsd='';$anh='';
+$mnh='';$msp=''; $makhohang=''; $soluong='';$ngaynhap='';$tensp='';$mncc='';$hsd='';$anh='';
 // cập nhật
 if(isset($_POST['btnLuu'])){
 
@@ -38,8 +38,10 @@ if(isset($_POST['btnLuu'])){
            echo "<script>alert('Trùng mã nhập hàng')</script>";
        }
     else{
-        $sql3="INSERT INTO nhaphang (MaNhapHang, MaSanPham,TenSanPham, MaNhaCungCap, SoLuongNhap, NgayNhap,  NgaySanXuat, HanSuDung) VALUES('$mnh', '$msp','$tensp','$mncc', '$soluong', '$ngaynhap','$ngaysx', '$hsd')";
+        $sql3="INSERT INTO nhaphang (MaNhapHang, MaSanPham,TenSanPham, MaNhaCungCap, SoLuongNhap, NgayNhap,   HanSuDung) VALUES('$mnh', '$msp','$tensp','$mncc', '$soluong', '$ngaynhap', '$hsd')";
         $kq2=mysqli_query($cons,$sql3);
+        $sql_insert_sp = "INSERT INTO sanpham (MaSanPham, TenSanPham,MaNhaCungCap,HanSuDung,SoLuong) VALUES ('$msp', '$tensp','$mncc','$hsd','$soluong')";
+$kq_insert_sp = mysqli_query($cons, $sql_insert_sp);
         if (isset($_FILES['image'])) {
             $errors = array();
             $file_name = $_FILES['image']['name'];
@@ -55,7 +57,8 @@ if(isset($_POST['btnLuu'])){
             $target = "photo/".basename($image);
             $sql_h5 = "UPDATE nhaphang SET Anh='$image' WHERE MaSanPham='$msp'";
             $dt_H6 = mysqli_query($cons, $sql_h5);
-            
+            $sql_update_anh = "UPDATE sanpham SET Anh='$image' WHERE MaSanPham='$msp'";
+            $kq_update_anh = mysqli_query($cons, $sql_update_anh);
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
               
             } 
@@ -210,7 +213,7 @@ mysqli_close($cons);
                    
                     <th>Số lượng hàng</th>
                     <th>Ngày Nhập</th>
-                    <th>Ngày sản xuất</th>
+                  
                     <th>Hạn sử dụng</th>
                     <th>Ảnh</th>
 
@@ -230,7 +233,7 @@ mysqli_close($cons);
                         
                         <td><?php echo $row['SoLuongNhap'] ?></td>
                         <td><?php echo date('d/m/Y', strtotime($row['NgayNhap'])) ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($row['NgaySanXuat'])) ?></td>
+                        
                         <td><?php echo date('d/m/Y', strtotime($row['HanSuDung'])) ?></td>
                         <td><?php echo "<img src='photo/".$row['Anh']."' >";?></td>
                         

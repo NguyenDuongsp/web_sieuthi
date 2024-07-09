@@ -47,7 +47,7 @@ WHERE h.MaHoaDon = '$mhd'";
 
     <div class="conten">
         <form method="post" action="">
-            <table class="table table-bordered table-striped" style="width:100%">
+            <table class="table table-bordered table-striped" style="height:100vh">
                 <tr>
                     <td colspan="2" style="text-align: center;">
                         <h5 >XEM CHI TIẾT THÔNG TIN HÓA ĐƠN</h5>

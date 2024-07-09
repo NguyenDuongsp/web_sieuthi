@@ -13,6 +13,14 @@ if (isset($_SESSION['username'])) {
         $tk = $_SESSION['username'];
     
   }}
+  //xư lý button tìm kiếm
+if(isset($_POST['btntim'])){
+    $msp=$_POST['txttimkiem'];
+    $sqltk="SELECT sp.MaSanPham, sp.TenSanPham, sp.MaNhaCungCap, sp.Anh, sp.NgaySanXuat, sp.HanSuDung, sp.GiaBan, km.PhanTramKhuyenMai
+    FROM sanpham AS sp
+    LEFT JOIN khuyenmai AS km ON sp.MaSanPham = km.MaSanPham WHERE sp.TenSanPham like '%$msp%'";
+    $result=mysqli_query($con, $sqltk);
+}
 ?>
 
 <!DOCTYPE html>
@@ -152,10 +160,10 @@ if (isset($_SESSION['username'])) {
                                <img class="logoimg" src="./assets/img/logo5.jpg" alt="" style="width: 200px; height: 100px;">
                             </a>
                         </div>
-
+                    <form action="" method="post">
                         <div class="header__search" >
                             <div class="header__search-input-wrap">
-                                <input type="text" class="header__search-input" placeholder="Nhập để tìm kiếm" >
+                                <input type="text" name="txttimkiem" class="header__search-input" placeholder="Nhập để tìm kiếm" >
                                 
                                 <!-- Search history -->
                                 <div class="header__search-history">
@@ -184,11 +192,11 @@ if (isset($_SESSION['username'])) {
                                     </li>
                                 </ul>
                             </div>
-                            <button class="header__search-btn">
+                            <button name="btntim" class="header__search-btn">
                                 <i class="header__search-btn-icon fa-solid fa-magnifying-glass"></i>
                             </button>
                         </div>
-
+                    </form>
                         <!-- cart layout -->
                         <div class="header__cart">
                             <div class="header__cart-wrap">

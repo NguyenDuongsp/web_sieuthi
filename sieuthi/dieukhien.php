@@ -1,8 +1,9 @@
 <?php
 $conn=mysqli_connect("localhost","root","","ql_sieuthi")
 or die('Lỗi kết nối');
+$curenDate=date('Y-m-d');
         $sql_sohoadon = " SELECT COUNT(DISTINCT MaHoaDon) AS count FROM hoadon";
-$sql_sosanpham = "SELECT COUNT(DISTINCT MaSanPham) AS count FROM sanpham";
+$sql_sosanpham = "SELECT COUNT(DISTINCT MaSanPham) AS count FROM sanpham where HanSuDung > '$curenDate'";
 $sql_sonhanvien = "SELECT COUNT(DISTINCT SDT) AS count FROM nhanvien";
 $sql_sokhachhang = "SELECT COUNT(DISTINCT SDT) AS count FROM khachhang";
 $kq1 = mysqli_query($conn,$sql_sohoadon);
@@ -46,7 +47,7 @@ $kq4 = mysqli_query($conn,$sql_sokhachhang);
                 <a class="item_app" href="./Quanlysanpham.php">
                     <div class="item_name">
                     <div class="span-css">
-                        <span class="large-number"><?php echo mysqli_fetch_assoc($kq2)['count']; ?></span><span>Tổng số sản phẩm đang bán </span>
+                        <span class="large-number"><?php echo mysqli_fetch_assoc($kq2)['count']; ?></span><span>Các mặt hàng đang bán </span>
                     </div>
                         <i style="color:white" class=" btn btn-warning item_icon fa-solid fa-cart-shopping"></i>
                     </div>
@@ -100,5 +101,17 @@ $kq4 = mysqli_query($conn,$sql_sokhachhang);
             height:40px;
         }
     </style>
+    <script>
+        // Lấy dữ liệu từ localStorage
+        var selectedCellData = localStorage.getItem('selectedCellData');
+
+        // Tìm và đánh dấu ô có dữ liệu tương tự
+        var cells = document.getElementsByClassName('menu__item');
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].innerText === selectedCellData) {
+                cells[i].classList.add('highlight');
+            }
+        }
+    </script> 
 </body>
 </html>

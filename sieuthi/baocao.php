@@ -1,5 +1,6 @@
-
 <?php
+ include_once './Classes/PHPExcel.php';
+ include_once './Classes/PHPExcel/IOFactory.php';
 $con_h4 = mysqli_connect('localhost', 'root', '', 'ql_sieuthi') or die('lỗi kết nối');
 $kq = '';
 $a = '';
@@ -38,7 +39,71 @@ if (isset($_POST['txta']) && isset($_POST['txtb'])) {
             
           
      }
- 
+ //XỬ lý xuất Excel
+
+if(isset($_POST['btnxuatexcel'])){
+    //code xuất excel
+    $objExcel=new PHPExcel();
+    $objExcel->setActiveSheetIndex(0);
+    $sheet=$objExcel->getActiveSheet()->setTitle('QLKH');
+    $rowCount=2;
+    //Tạo tiêu đề cho cột trong excel
+    $sheet->setCellValue('A'.$rowCount,'Mã hóa đơn');
+    $sheet->setCellValue('B'.$rowCount,'Mã Sản Phẩm');
+    $sheet->setCellValue('C'.$rowCount,'Số Lượng');
+    $sheet->setCellValue('D'.$rowCount,'Mã khách hàng');
+    $sheet->setCellValue('E'.$rowCount,'Tổng tiền');
+    $sheet->setCellValue('F'.$rowCount,'Ngày tạo');
+
+    //định dạng cột tiêu đề
+    $sheet->getColumnDimension('A')->setAutoSize(true);
+    $sheet->getColumnDimension('B')->setAutoSize(true);
+    $sheet->getColumnDimension('C')->setAutoSize(true);
+    $sheet->getColumnDimension('D')->setAutoSize(true);
+    $sheet->getColumnDimension('E')->setAutoSize(true);
+    $sheet->getColumnDimension('F')->setAutoSize(true);
+    //gán màu nền
+    $sheet->getStyle('A'.$rowCount.':F'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
+    //căn giữ
+    $sheet->getStyle('A'.$rowCount.':F'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    //Điền dữ liệu vào các dòng. Dữ liệu lấy từ DB
+    $a=$_POST['txta'];
+    $b=$_POST['txtb'];
+    $sqltk_1="SELECT * FROM hoadon WHERE NgayTao BETWEEN '$a' AND '$b'";
+    $data_1=mysqli_query($con_h4, $sqltk_1);
+
+    while($row=mysqli_fetch_array($data_1)){
+        $rowCount++;
+        $sheet->setCellValue('A'.$rowCount,$row['MaHoaDon']);
+        $sheet->setCellValue('B'.$rowCount,$row['MaSanPham']);
+        $sheet->setCellValue('C'.$rowCount,$row['SoLuong']);
+$sheet->setCellValue('D'.$rowCount,$row['MaKhachHang']);
+        $sheet->setCellValue('E'.$rowCount,$row['TongTien']);
+        $sheet->setCellValue('F'.$rowCount,$row['NgayTao']);
+    }
+    //Kẻ bảng 
+    $styleAray=array(
+        'borders'=>array(
+            'allborders'=>array(
+                'style'=>PHPExcel_Style_Border::BORDER_THIN
+            )
+        )
+        );
+    $sheet->getStyle('A1:'.'E'.($rowCount))->applyFromArray($styleAray);
+    $objWriter=new PHPExcel_Writer_Excel2007($objExcel);
+    $fileName='ExportExcel.xlsx';
+    $objWriter->save($fileName);
+    header('Content-Disposition: attachment; filename="'.$fileName.'"');
+    header('Content-Type: application/vnd.openxlmformatsofficedocument.speadsheetml.sheet');
+    header('Content-Length: '.filesize($fileName));
+    header('Content-Transfer-Encoding:binary');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: no-cache');
+    readfile($fileName);
+}
+
+//ngắt kết nối
+mysqli_close($con_h4);
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +157,7 @@ if (isset($_POST['txta']) && isset($_POST['txtb'])) {
 </tr>
                
                 <td class="col1" colspan="2" style="text-align: right" >Số tiền bán được </td>
-                    <td colspan="3" class="col2" style="text-align: left;">
+<td colspan="3" class="col2" style="text-align: left;">
                         <input type="text" value="<?php echo isset($total_sales) ? $total_sales : ''; ?>" style="width:140px;" readonly>
                     </td>
                 </tr>
@@ -103,11 +168,13 @@ if (isset($_POST['txta']) && isset($_POST['txtb'])) {
                         </td>
                     </tr>
                     <tr >
-                        <th>STT</th>
-                        <th>Mã hóa đơn</th>
-                        <th>Mã khách hàng</th>
-                        <th>Tổng tiền</th>
-                        <th>Ngày tạo</th>
+                    <th>STT</th>
+                    <th>Mã hóa đơn</th>
+                    <th>Mã Sản Phẩm</th>
+                    <th>Số Lượng</th>
+                    <th>Mã khách hàng</th>
+                    <th>Tổng tiền</th>
+                    <th>Ngày tạo</th>
                     </tr>
                     <?php
                     $hasInvoices = false; // Biến kiểm tra có hóa đơn hay không
@@ -121,9 +188,11 @@ if (isset($_POST['txta']) && isset($_POST['txtb'])) {
                         <tr>
                             <td><?php echo ++$i ?></td>
                             <td><?php echo $row['MaHoaDon'] ?></td>
-                            <td><?php echo $row['MaKhachHang'] ?></td>
-                            <td><?php echo $row['TongTien'] ?></td>
-                            <td><?php echo date('d/m/Y', strtotime($row['NgayTao'])) ?></td>
+                        <td><?php echo $row['MaSanPham'] ?></td>
+                        <td><?php echo $row['SoLuong'] ?></td>
+                        <td><?php echo $row['MaKhachHang'] ?></td>
+                        <td><?php echo $row['TongTien'] ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($row['NgayTao'])) ?></td>
                             
                         </tr>
                         <?php

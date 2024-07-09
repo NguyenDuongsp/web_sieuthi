@@ -105,6 +105,10 @@ if(isset($_POST['btnxuatexcel'])){
     header('Pragma: no-cache');
     readfile($fileName);
 }
+if(isset($_POST['btnnhapexcel'])){
+    echo "<script>window.location.href='./nhapfile_KH.php'</script>";
+    exit;
+}
 
 //ngắt kết nối
 mysqli_close($con_1);

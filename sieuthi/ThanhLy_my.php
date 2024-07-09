@@ -76,7 +76,7 @@ $result = $conn->query($query);
                             <td><?php echo $row['LoaiSanPham'] ?></td>
                             <td>
                                 <span class="btntool btn btn-danger">
-                                    <a href="./sanpham_xoa.php?MaSanPham=<?php echo $row['MaSanPham'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm?')">Xóa</a>
+                                    <a href="./sanpham_xoa.php?TenSanPham=<?php echo $row['TenSanPham'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm?')">Xóa</a>
                                 </span>
                             </td>
                         </tr>
@@ -93,5 +93,17 @@ $result = $conn->query($query);
     // Đóng kết nối cơ sở dữ liệu
     $conn->close();
     ?>
+    <script>
+        // Lấy dữ liệu từ localStorage
+        var selectedCellData = localStorage.getItem('selectedCellData');
+
+        // Tìm và đánh dấu ô có dữ liệu tương tự
+        var cells = document.getElementsByClassName('menu__item');
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].innerText === selectedCellData) {
+                cells[i].classList.add('highlight');
+            }
+        }
+    </script> 
 </body>
 </html>

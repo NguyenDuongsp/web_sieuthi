@@ -175,5 +175,17 @@ if (isset($_POST['btntim'])) {
    // Đóng kết nối cơ sở dữ liệu
     $conn->close();
     ?>
+    <script>
+        // Lấy dữ liệu từ localStorage
+        var selectedCellData = localStorage.getItem('selectedCellData');
+
+        // Tìm và đánh dấu ô có dữ liệu tương tự
+        var cells = document.getElementsByClassName('menu__item');
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].innerText === selectedCellData) {
+                cells[i].classList.add('highlight');
+            }
+        }
+    </script> 
 </body>
 </html>

@@ -2,7 +2,7 @@
 include_once'./Classes/PHPExcel.php';
 include_once'./Classes/PHPExcel/IOFactory.php';
 
-$msp=''; $tsp='';$mncc=''; $nsx='';$hsd='';$k=''; $gb='';$dvt='';$lsp='';$sl='';
+$msp=''; $tsp='';$mncc=''; $nsx='';$hsd='';$k=''; $gb='';$dvt='';$lsp='';
 //B1: kết nối đến database
 $con_5=mysqli_connect("localhost","root","","ql_sieuthi")
 or die('Lỗi kết nối');
@@ -28,7 +28,7 @@ if (isset($_POST['btnLuu'])) {
     $gb = $_POST['txtGiaBan'];
     $dvt = $_POST['txtDonViTinh'];
     $lsp = $_POST['txtLoaiSanPham'];
-    $sl = $_POST['txtSoLuong'];
+   
     // Kiểm tra dữ liệu rỗng (MaSanPham)
     if ($msp == '') {
         echo "<script>alert('Phải nhập mã sản phẩm')</script>";
@@ -40,8 +40,8 @@ if (isset($_POST['btnLuu'])) {
             echo "<script>alert('Trùng mã sản phẩm')</script>";
         } else {
             // Thực hiện câu lệnh INSERT INTO
-            $sql_5 = "INSERT INTO sanpham (MaSanPham, TenSanPham, MaNhaCungCap, NgaySanXuat, HanSuDung, KeHang, GiaBan, DonViTinh, LoaiSanPham,SoLuong) 
-                      VALUES ('$msp', '$tsp', '$mncc', '$nsx', '$hsd','$k', '$gb','$dvt', '$lsp','$sl')";
+            $sql_5 = "INSERT INTO sanpham (MaSanPham, TenSanPham, MaNhaCungCap, NgaySanXuat, HanSuDung, KeHang, GiaBan, DonViTinh, LoaiSanPham) 
+                      VALUES ('$msp', '$tsp', '$mncc', '$nsx', '$hsd','$k', '$gb','$dvt', '$lsp')";
             $kq_5 = mysqli_query($con_5, $sql_5);
             
             // Upload ảnh
@@ -94,7 +94,7 @@ if(isset($_POST['btnxuatexcel'])){
     $sheet->setCellValue('G'.$rowCount,'Giá Bán');
     $sheet->setCellValue('H'.$rowCount,'Đơn Vị Tính');
     $sheet->setCellValue('I'.$rowCount,'Loại Sản Phẩm');
-    $sheet->setCellValue('J'.$rowCount,'Số Lượng');
+   
     //định dạng cột tiêu đề
     $sheet->getColumnDimension('A')->setAutoSize(true);
     $sheet->getColumnDimension('B')->setAutoSize(true);

@@ -17,13 +17,13 @@ if (isset($_POST['btn_thanhtoan'])) {
     $sl = $_POST['txtsl'];
     $tongtien = $_POST['txttongtien'];
     $mkh = $_POST['txtmakhachhang'];
+    $mhd = "MD" . uniqid();
 
     // Câu lệnh INSERT vào bảng
     $sql = "INSERT INTO hoadon (MaHoaDon, MaSanPham, SoLuong, MaKhachHang, TongTien, NgayTao) VALUES ";
     for ($i = 0; $i < count($msp); $i++) {
         $msp_value = $msp[$i];
         $sl_value = $sl[$i];
-        $mhd = "MD" . uniqid();
         $sql .= " ('$mhd', '$msp_value', '$sl_value', '$mkh', '$tongtien', '$currentDate'),";
     }
     $sql = rtrim($sql, ","); // Xóa dấu phẩy cuối cùng
@@ -61,63 +61,6 @@ if(isset($_POST['btntimkiem'])){
 
     $result=mysqli_query($con,$sqltk9);
 }
-// if(isset($_POST['btn_thanhtoan'])){
-
-//     $objExcel=new PHPExcel();
-//     $objExcel->setActiveSheetIndex(0);
-//     $sheet=$objExcel->getActiveSheet()->setTitle('DSHD');
-//     $rowCount=2;
-//     //Tạo tiêu đề cho cột trong excel
-//     $sheet->setCellValue('A'.$rowCount,'Mã hóa đơn');
-//     $sheet->setCellValue('B'.$rowCount,'Mã khách hàng');
-//     $sheet->setCellValue('C'.$rowCount,'Tổng tiền');
-//     $sheet->setCellValue('D'.$rowCount,'Ngày tạo');
-   
-   
-//     //định dạng cột tiêu đề
-//     $sheet->getColumnDimension('A')->setAutoSize(true);
-//     $sheet->getColumnDimension('B')->setAutoSize(true);
-//     $sheet->getColumnDimension('C')->setAutoSize(true);
-//     $sheet->getColumnDimension('D')->setAutoSize(true);
-    
-//     //gán màu nền
-//     $sheet->getStyle('A'.$rowCount.':D'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
-//     //căn giữa
-//     $sheet->getStyle('A'.$rowCount.':D'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-//     //Điền dữ liệu vào các dòng. Dữ liệu lấy từ DB
-//     $mhd=$_POST['txtmahd'];
-    
-//     $sqltk="SELECT * FROM hoadon WHERE MaHoaDon like '%$mhd' ";
-//     $data1 = mysqli_query($con4n,$sqltk);
-
-//     while($row=mysqli_fetch_array($data1)){
-//         $rowCount++;
-//         $sheet->setCellValue('A'.$rowCount,$row['MaHoaDon']);
-//         $sheet->setCellValue('B'.$rowCount,$row['MaKhachHang']);
-//         $sheet->setCellValue('C'.$rowCount,$row['TongTien']);
-//         $sheet->setCellValue('D'.$rowCount,$row['NgayTao']);
-        
-//     }
-//     //Kẻ bảng 
-//     $styleAray=array(
-//         'borders'=>array(
-//             'allborders'=>array(
-//                 'style'=>PHPExcel_Style_Border::BORDER_THIN
-//             )
-//         )
-//         );
-//     $sheet->getStyle('A2:'.'D'.($rowCount))->applyFromArray($styleAray);
-//     $objWriter=new PHPExcel_Writer_Excel2007($objExcel);
-//     $fileName='ExportExcel.xlsx';
-//     $objWriter->save($fileName);
-//     header('Content-Disposition: attachment; filename="'.$fileName.'"');
-//     header('Content-Type: application/vnd.openxlmformatsofficedocument.speadsheetml.sheet');
-//     header('Content-Length: '.filesize($fileName));
-//     header('Content-Transfer-Encoding:binary');
-//     header('Cache-Control: must-revalidate');
-//     header('Pragma: no-cache');
-//     readfile($fileName);
-// }
 
 ?>
 

@@ -3,7 +3,7 @@
     $con_2= mysqli_connect('localhost', 'root', '', 'ql_sieuthi')
     or die('Lỗi kết nối');
     $mNcc=$_GET['MaNhaCungCap'];
-    $sql_2="SELECT*FROM nhacungcap WHERE MaNhaCungCap='$mNcc'";
+    $sql_2="SELECT*FROM nhacungcap WHERE MaNhaCungCap='$mNcc' and TenNhaCungCap='$tncc'";
     $data_2=mysqli_query($con_2, $sql_2);
     //xử lý button luu
     if(isset($_POST['btnLuu'])){

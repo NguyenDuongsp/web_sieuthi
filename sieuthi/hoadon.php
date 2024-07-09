@@ -1,7 +1,7 @@
 <?php
  include_once './Classes/PHPExcel.php';
  include_once './Classes/PHPExcel/IOFactory.php';
- $mhd = "";$mkh = "";$tt = "";$ntao ="";
+ $mhd = ""; $msp = "";$sl = "";$mkh = "";$tt = "";$ntao ="";
 //B1: kết nối đến database
 $con4n=mysqli_connect("localhost","root","","ql_sieuthi")
 or die('Lỗi kết nối');
@@ -17,6 +17,8 @@ if(isset($_POST['btntim'])){
 
 if(isset($_POST['btnLuu'])){
     $mhd = $_POST['txtmahd'];
+    $msp = $_POST['txtMaSanPham'];
+    $sl = $_POST['txtsl'];
     $mkh = $_POST['txtmakh'];
     $tt = $_POST['txttt'];
     $ntao = $_POST['txtntao'];
@@ -36,7 +38,7 @@ if(isset($_POST['btnLuu'])){
       }
         else{
         //Tao truy van chen du  lieu vao bang Loaisach
-        $sql1="INSERT INTO hoadon VALUES ('$mhd','$mkh','$tt','$ntao')";
+        $sql1="INSERT INTO hoadon VALUES ('$mhd','$msp','$sl','$mkh','$tt','$ntao')";
         $kq=mysqli_query($con4n,$sql1);
         if($kq) {
             echo "<script> alert('Them moi thanh cong!')</script>";
@@ -55,9 +57,11 @@ if(isset($_POST['btnLuu'])){
     $rowCount=2;
     //Tạo tiêu đề cho cột trong excel
     $sheet->setCellValue('A'.$rowCount,'Mã hóa đơn');
-    $sheet->setCellValue('B'.$rowCount,'Mã khách hàng');
-    $sheet->setCellValue('C'.$rowCount,'Tổng tiền');
-    $sheet->setCellValue('D'.$rowCount,'Ngày tạo');
+    $sheet->setCellValue('B'.$rowCount,'Mã Sản Phẩm');
+    $sheet->setCellValue('C'.$rowCount,'Số Lượng');
+    $sheet->setCellValue('D'.$rowCount,'Mã khách hàng');
+    $sheet->setCellValue('E'.$rowCount,'Tổng tiền');
+    $sheet->setCellValue('F'.$rowCount,'Ngày tạo');
    
    
     //định dạng cột tiêu đề
@@ -65,13 +69,14 @@ if(isset($_POST['btnLuu'])){
     $sheet->getColumnDimension('B')->setAutoSize(true);
     $sheet->getColumnDimension('C')->setAutoSize(true);
     $sheet->getColumnDimension('D')->setAutoSize(true);
-    
+    $sheet->getColumnDimension('E')->setAutoSize(true);
+    $sheet->getColumnDimension('F')->setAutoSize(true);
     //gán màu nền
-    $sheet->getStyle('A'.$rowCount.':D'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
+    $sheet->getStyle('A'.$rowCount.':F'.$rowCount)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('00FF00');
     //căn giữa
-    $sheet->getStyle('A'.$rowCount.':D'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $sheet->getStyle('A'.$rowCount.':F'.$rowCount)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
     //Điền dữ liệu vào các dòng. Dữ liệu lấy từ DB
-    $mhd=$_POST['txtmahd'];
+    $mhd=$_POST['txttimkiem'];
     
     $sqltk="SELECT * FROM hoadon WHERE MaHoaDon like '%$mhd' ";
     $data1 = mysqli_query($con4n,$sqltk);
@@ -79,9 +84,13 @@ if(isset($_POST['btnLuu'])){
     while($row=mysqli_fetch_array($data1)){
         $rowCount++;
         $sheet->setCellValue('A'.$rowCount,$row['MaHoaDon']);
-        $sheet->setCellValue('B'.$rowCount,$row['MaKhachHang']);
-        $sheet->setCellValue('C'.$rowCount,$row['TongTien']);
-        $sheet->setCellValue('D'.$rowCount,$row['NgayTao']);
+        
+       
+        $sheet->setCellValue('B'.$rowCount,$row['MaSanPham']);
+        $sheet->setCellValue('C'.$rowCount,$row['SoLuong']);
+        $sheet->setCellValue('D'.$rowCount,$row['MaKhachHang']);
+        $sheet->setCellValue('E'.$rowCount,$row['TongTien']);
+        $sheet->setCellValue('F'.$rowCount,$row['NgayTao']);
         
     }
     //Kẻ bảng 
@@ -92,7 +101,7 @@ if(isset($_POST['btnLuu'])){
             )
         )
         );
-    $sheet->getStyle('A2:'.'D'.($rowCount))->applyFromArray($styleAray);
+    $sheet->getStyle('A2:'.'F'.($rowCount))->applyFromArray($styleAray);
     $objWriter=new PHPExcel_Writer_Excel2007($objExcel);
     $fileName='ExportExcel.xlsx';
     $objWriter->save($fileName);
@@ -156,6 +165,8 @@ mysqli_close($con4n);
                     </tr>
                 <tr >
                     <th>Mã hóa đơn</th>
+                    <th>Mã Sản Phẩm</th>
+                    <th>Số Lượng</th>
                     <th>Mã khách hàng</th>
                     <th>Tổng tiền</th>
                     <th>Ngày tạo</th>
@@ -172,6 +183,8 @@ mysqli_close($con4n);
                 ?>
                     <tr>
                         <td><?php echo $row['MaHoaDon'] ?></td>
+                        <td><?php echo $row['MaSanPham'] ?></td>
+                        <td><?php echo $row['SoLuong'] ?></td>
                         <td><?php echo $row['MaKhachHang'] ?></td>
                         <td><?php echo $row['TongTien'] ?></td>
                         <td><?php echo date('d/m/Y', strtotime($row['NgayTao'])) ?></td>
@@ -184,10 +197,10 @@ mysqli_close($con4n);
 
                                 <a href="./xoahd.php?MaHoaDon=<?php echo $row['MaHoaDon']?>">Xóa</a>
                             </span>
-                            <!-- <span class="btntool btn btn-danger">
+                             <span class="btntool btn btn-danger">
 
                                 <a href="./hoadonxem.php?MaHoaDon=<?php echo $row['MaHoaDon']?>">Xem</a>
-                            </span> -->
+                            </span> 
                         </td>
                     </tr>
                 <?php        
@@ -226,17 +239,24 @@ mysqli_close($con4n);
                         </td>
                     </tr>
                     <tr>
-                        <td class = "col1">Mã khách hàng</td>
-                        <td class = "col2">
-                            <input class="form-control" type="text"name ="txtmakh"value="<?php echo $mkh?>" style="width:450px">
-                        </td>
-                    </tr> 
-                    <tr>
                         <td class = "col1">Mã Sản Phẩm</td>
                         <td class = "col2">
                             <input class="form-control" type="text"name ="txtMaSanPham"value="<?php echo $msp?>" style="width:450px">
                         </td>
                     </tr> 
+                    <tr>
+                        <td class = "col1">Số Lượng</td>
+                        <td class = "col2">
+                            <input class="form-control" type="text"name ="txtsl"value="<?php echo $sl?>" style="width:450px">
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td class = "col1">Mã khách hàng</td>
+                        <td class = "col2">
+                            <input class="form-control" type="text"name ="txtmakh"value="<?php echo $mkh?>" style="width:450px">
+                        </td>
+                    </tr> 
+                    
                    <tr>
                         <td class = "col1">Tổng tiền</td>
                         <td class = "col2">
@@ -319,3 +339,4 @@ modalClose.addEventListener('click',hideBuyTickers)
     </style>
     </body>
 </html>
+

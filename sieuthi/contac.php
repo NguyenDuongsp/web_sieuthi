@@ -84,7 +84,7 @@ if (isset($_SESSION['username'])) {
                                 <ul class="sub-menu">
                                     <li class="sub-menu-item"> 
                                         <a href="http://localhost/WEB_SIEUTHI/sieuthi/Quanlysanpham.php" class="menu__item-link">
-                                        <i class="menu__item-link-icon  fa-solid fa-boxes-stacked"></i>
+                                        <i class="menu__item-link-icon fa-solid fa-box"></i>
                                             <span>Sản phẩm</span>
                                         </a>
                                     </li>
@@ -154,6 +154,13 @@ if (isset($_SESSION['username'])) {
                                      <span>Kho hàng</span>
                                 </a>
                             </li>
+                            <li class="menu__item"> 
+                                <a href="http://localhost/web_sieuthi/sieuthi/vandon2.php" class="menu__item-link">
+                                <i class="menu__item-link-icon  fa-solid fa-truck-fast"></i>
+                                     <span>Vận đơnhienngu</span>
+                                </a>
+                            </li>
+                          
                     </ul>
 
                     </div>
