@@ -78,7 +78,7 @@ $kq4 = mysqli_query($conn,$sql_sokhachhang);
             <br>
             
             <br>
-            <p > MANAGE 999 SỰ LỰA CHỌN CỦA BẠN  </p>
+            <p > MANAGE 999 SỰ LỰA CHỌN CỦA BẠN và tôi </p>
            
             <br>
             <br>
