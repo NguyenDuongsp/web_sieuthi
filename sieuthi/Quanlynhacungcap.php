@@ -158,7 +158,7 @@ mysqli_close($con_2);
                         </td>
                     </tr>
                 <tr >
-                    <th>STT</th>
+                    <th>STT1</th>
                     <th>Mã nhà cung cấp</th>
                     <th>Tên nhà cung cấp</th>
                     <th>Mã sản phẩm</th>
